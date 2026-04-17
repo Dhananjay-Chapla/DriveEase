@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service Pricing – DriveEase</title>
+    <meta name="description" content="DriveEase Service Pricing – View government fees for Learner Licence, Driving Licence, Renewal, International Permit, and more." />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --navy: #0D1B3E;
+            --blue: #1A4FD6;
+            --sky: #3B82F6;
+            --teal: #0EA5E9;
+            --accent: #F59E0B;
+            --green: #10B981;
+            --red: #EF4444;
+            --purple: #8B5CF6;
+            --light: #F0F6FF;
+            --white: #FFFFFF;
+            --gray: #6B7280;
+            --gray-light: #E5EDF8;
+            --text: #1E293B;
+            --radius: 14px;
+            --shadow: 0 4px 24px rgba(26, 79, 214, 0.10);
+            --shadow-lg: 0 12px 40px rgba(13, 27, 62, 0.14);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Sora', sans-serif; }
+
+        /* ─── TOPBAR ─── */
+        .topbar { background: var(--navy); color: #A8C4F5; font-size: 0.75rem; padding: 6px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+        .topbar a { color: #A8C4F5; text-decoration: none; margin-left: 16px; transition: color 0.2s; }
+        .topbar a:hover { color: var(--accent); }
+
+        /* ─── HEADER ─── */
+        header { background: var(--white); border-bottom: 1px solid var(--gray-light); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 12px rgba(13, 27, 62, 0.07); }
+        .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 20px; }
+        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .brand-emblem { width: 48px; height: 48px; background: linear-gradient(135deg, var(--navy), var(--blue)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -1px; transition: transform 0.3s; }
+        .brand-emblem:hover { transform: scale(1.08) rotate(-3deg); }
+        .brand-name { font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--navy); }
+        .brand-name span { color: var(--blue); }
+        .header-nav { display: flex; align-items: center; gap: 8px; }
+        .header-nav a { font-size: 0.875rem; font-weight: 500; color: var(--text); text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: all 0.15s; }
+        .header-nav a:hover, .header-nav a.active { background: var(--light); color: var(--blue); }
+        .btn { padding: 9px 20px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.18s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: var(--blue); color: white; box-shadow: 0 2px 8px rgba(26, 79, 214, 0.25); }
+        .btn-primary:hover { background: var(--navy); transform: translateY(-1px); }
+
+        /* ─── HERO ─── */
+        .pricing-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, #1A3A8F 60%, #1A5FBF 100%);
+            color: white;
+            padding: 72px 32px 56px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 450px; height: 450px; border-radius: 50%; background: rgba(59, 130, 246, 0.12); }
+        .pricing-hero::after { content: ''; position: absolute; bottom: -120px; left: 8%; width: 350px; height: 350px; border-radius: 50%; background: rgba(245, 158, 11, 0.07); }
+        .hero-content { position: relative; z-index: 1; max-width: 750px; margin: 0 auto; }
+        .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.4); color: var(--accent); font-size: 0.75rem; font-weight: 600; padding: 4px 14px; border-radius: 100px; margin-bottom: 20px; }
+        .pricing-hero h1 { font-size: 3rem; font-weight: 700; margin-bottom: 16px; line-height: 1.15; }
+        .pricing-hero h1 em { font-style: normal; color: var(--teal); }
+        .pricing-hero p { font-size: 1.15rem; color: rgba(255,255,255,0.8); line-height: 1.7; max-width: 650px; margin: 0 auto; }
+
+        /* ─── SERVICE CARDS ─── */
+        .services-section {
+            max-width: 1200px;
+            margin: -36px auto 0;
+            padding: 0 32px 60px;
+            position: relative;
+            z-index: 2;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 4px 24px rgba(13, 27, 62, 0.08);
+            border: 1.5px solid var(--gray-light);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--blue);
+        }
+
+        .card-header {
+            padding: 32px 28px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        .card-icon {
+            width: 56px; height: 56px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        .card-header-text h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .card-header-text p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.55;
+        }
+
+        .card-body {
+            padding: 0 28px;
+            flex: 1;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-light);
+            font-size: 0.875rem;
+        }
+        .fee-row:last-child { border-bottom: none; }
+        .fee-label {
+            color: var(--text);
+            font-weight: 500;
+        }
+        .fee-amount {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            color: var(--navy);
+        }
+        .fee-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0 0;
+            margin-top: 4px;
+            border-top: 2px solid var(--gray-light);
+        }
+        .fee-total .fee-label {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 0.9375rem;
+        }
+        .fee-total .fee-amount {
+            font-size: 1.5rem;
+            color: var(--blue);
+        }
+
+        .card-includes {
+            padding: 20px 28px 0;
+        }
+        .card-includes h4 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray);
+            margin-bottom: 12px;
+        }
+        .includes-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .includes-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+        .includes-list .dot {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: #D1FAE5;
+            color: #065F46;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .card-footer {
+            padding: 24px 28px 28px;
+            margin-top: auto;
+        }
+        .card-cta {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 2px solid var(--blue);
+            background: transparent;
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .card-cta:hover {
+            background: var(--blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 79, 214, 0.3);
+        }
+        .card-cta.filled {
+            background: linear-gradient(135deg, var(--blue), #2563EB);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 6px 20px rgba(26, 79, 214, 0.35);
+        }
+        .card-cta.filled:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(26, 79, 214, 0.45);
+        }
+
+        /* ─── SECOND ROW (2-col) ─── */
+        .services-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        /* ─── COMPARISON TABLE ─── */
+        .comparison-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 32px;
+        }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; background: var(--light); color: var(--blue); padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; border: 1.5px solid var(--gray-light); }
+        .section-title { font-size: 2rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+        .section-desc { color: var(--gray); font-size: 1.05rem; line-height: 1.7; margin-bottom: 36px; max-width: 700px; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(13, 27, 62, 0.08);
+            border: 1.5px solid var(--gray-light);
+        }
+        .comparison-table thead th {
+            background: var(--navy);
+            color: white;
+            padding: 18px 16px;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .comparison-table thead th:first-child { text-align: left; font-size: 0.85rem; }
+        .comparison-table tbody td {
+            padding: 15px 16px;
+            font-size: 0.84rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-light);
+            transition: background 0.2s;
+        }
+        .comparison-table tbody td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: var(--navy);
+        }
+        .comparison-table tbody tr:last-child td { border-bottom: none; }
+        .comparison-table tbody tr:hover td { background: #F8FBFF; }
+        .table-check { color: var(--green); font-size: 1.1rem; }
+        .table-cross { color: #D1D5DB; font-size: 1.1rem; }
+        .table-text { font-weight: 600; color: var(--navy); }
+        .table-fee { font-family: 'Sora', sans-serif; font-weight: 700; color: var(--blue); font-size: 0.9rem; }
+
+        /* ─── INFO BANNERS ─── */
+        .info-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px 60px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .info-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            border: 1.5px solid var(--gray-light);
+            transition: all 0.3s;
+        }
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: var(--blue);
+        }
+        .info-card h4 {
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-card p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.65;
+        }
+
+        /* ─── FAQ ─── */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 32px 80px;
+        }
+        .faq-item {
+            background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            border: 1.5px solid var(--gray-light);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .faq-item:hover { border-color: var(--blue); }
+        .faq-question {
+            padding: 20px 24px;
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+        .faq-question:hover { color: var(--blue); }
+        .faq-chevron {
+            font-size: 1.25rem;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            color: var(--gray);
+        }
+        .faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--blue); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .faq-item.open .faq-answer { max-height: 300px; }
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ─── CTA ─── */
+        .cta-section {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 32px;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, var(--navy), var(--blue));
+            border-radius: 24px;
+            padding: 56px 48px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box::before { content: ''; position: absolute; top: -60px; right: -60px; width: 250px; height: 250px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); }
+        .cta-box::after { content: ''; position: absolute; bottom: -40px; left: 10%; width: 180px; height: 180px; border-radius: 50%; background: rgba(245, 158, 11, 0.08); }
+        .cta-box h2 { font-size: 2rem; margin-bottom: 12px; position: relative; z-index: 1; }
+        .cta-box p { color: rgba(255,255,255,0.75); margin-bottom: 28px; font-size: 1.05rem; position: relative; z-index: 1; line-height: 1.7; }
+        .btn-white {
+            background: white; color: var(--navy); font-weight: 700;
+            padding: 14px 36px; border-radius: 12px; font-size: 1rem;
+            border: none; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+            position: relative; z-index: 1;
+        }
+        .btn-white:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+        /* ─── FOOTER ─── */
+        footer { background: var(--navy); color: rgba(255, 255, 255, 0.7); padding: 40px 32px 20px; margin-top: 20px; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 28px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .footer-brand .brand-name { color: white; font-size: 1.125rem; }
+        .footer-brand p { font-size: 0.8125rem; line-height: 1.6; margin-top: 10px; max-width: 260px; }
+        .footer-col h5 { color: white; font-size: 0.8125rem; font-weight: 700; margin-bottom: 12px; font-family: 'Sora', sans-serif; }
+        .footer-col a { display: block; font-size: 0.78125rem; color: rgba(255, 255, 255, 0.6); text-decoration: none; margin-bottom: 7px; transition: color 0.15s; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 0.75rem; }
+
+        /* ─── ANIMATIONS ─── */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .services-grid, .services-grid-2, .info-grid { grid-template-columns: 1fr; }
+            .pricing-hero h1 { font-size: 2.25rem; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .comparison-table { font-size: 0.8rem; }
+        }
+        @media (max-width: 600px) {
+            .pricing-hero { padding: 60px 20px 44px; }
+            .pricing-hero h1 { font-size: 1.85rem; }
+            .services-section, .comparison-section, .faq-section, .cta-section, .info-section { padding-left: 16px; padding-right: 16px; }
+            .header-nav { display: none; }
+            .comparison-table { display: block; overflow-x: auto; }
+            .footer-inner { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <div>🇮🇳 Ministry of Road Transport &amp; Highways, Government of India</div>
+        <div>
+            <a href="sitemap.html">Sitemap</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <a class="brand" href="portal.html">
+                <div class="brand-emblem">D</div>
+                <div class="brand-text">
+                    <div class="brand-name">Drive<span>Ease</span></div>
+                </div>
+            </a>
+            <div class="header-nav">
+                <a href="portal.html">Portal</a>
+                <a href="about.html">About</a>
+                <a href="product.html">Product</a>
+                <a href="pricing.html" class="active">Pricing</a>
+            </div>
+            <a href="portal.html" class="btn btn-primary">← Back to Portal</a>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="pricing-hero">
+        <div class="hero-content">
+            <div class="hero-tag">💰 Official Fee Structure</div>
+            <h1>Service Fees &amp; <em>Pricing Guide</em></h1>
+            <p>Transparent, government-mandated fees for all RTO services available on DriveEase. Know exactly what you'll pay before you apply.</p>
+        </div>
+    </section>
+
+    <!-- SERVICE CARDS – Row 1 -->
+    <section class="services-section">
+        <div class="services-grid reveal">
+
+            <!-- LEARNER LICENCE -->
+            <div class="service-card" id="service-ll">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #EFF6FF;">📝</div>
+                    <div class="card-header-text">
+                        <h3>Learner Licence</h3>
+                        <p>Apply for your first Learner Licence to start your driving journey. Valid for 6 months.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="fee-row">
+                        <span class="fee-label">Application Fee</span>
+                        <span class="fee-amount">₹ 150</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">LL Test Fee</span>
+                        <span class="fee-amount">₹ 50</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">Smart Card Fee</span>
+                        <span class="fee-amount">₹ 200</span>
+                    </div>
+                    <div class="fee-total">
+                        <span class="fee-label">Total</span>
+                        <span class="fee-amount">₹ 400</span>
+                    </div>
+                </div>
+                <div class="card-includes">
+                    <h4>What's Included</h4>
+                    <ul class="includes-list">
+                        <li><span class="dot">✓</span> Online application & e-form fill</li>
+                        <li><span class="dot">✓</span> Digital document upload</li>
+                        <li><span class="dot">✓</span> RTO test slot booking</li>
+                        <li><span class="dot">✓</span> Real-time status tracking</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="learners-licence.html" class="card-cta filled">Apply for LL →</a>
+                </div>
+            </div>
+
+            <!-- DRIVING LICENCE -->
+            <div class="service-card" id="service-dl">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #DBEAFE;">🚗</div>
+                    <div class="card-header-text">
+                        <h3>Driving Licence</h3>
+                        <p>Apply for a permanent Driving Licence after completing your Learner period. Valid for 20 years.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="fee-row">
+                        <span class="fee-label">Application Fee</span>
+                        <span class="fee-amount">₹ 200</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">DL Test Fee</span>
+                        <span class="fee-amount">₹ 300</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">Smart Card Fee</span>
+                        <span class="fee-amount">₹ 200</span>
+                    </div>
+                    <div class="fee-total">
+                        <span class="fee-label">Total</span>
+                        <span class="fee-amount">₹ 700</span>
+                    </div>
+                </div>
+                <div class="card-includes">
+                    <h4>What's Included</h4>
+                    <ul class="includes-list">
+                        <li><span class="dot">✓</span> Online application & e-form fill</li>
+                        <li><span class="dot">✓</span> Driving test slot booking</li>
+                        <li><span class="dot">✓</span> Document verification</li>
+                        <li><span class="dot">✓</span> Digital DL delivery</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="driving-licence.html" class="card-cta filled">Apply for DL →</a>
+                </div>
+            </div>
+
+            <!-- LICENCE RENEWAL -->
+            <div class="service-card" id="service-renewal">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #ECFDF5;">🔄</div>
+                    <div class="card-header-text">
+                        <h3>Licence Renewal</h3>
+                        <p>Renew your expired or expiring Driving Licence online without visiting the RTO office.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="fee-row">
+                        <span class="fee-label">Renewal Fee</span>
+                        <span class="fee-amount">₹ 200</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">Late Fee (if applicable)</span>
+                        <span class="fee-amount">₹ 300</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">Smart Card Fee</span>
+                        <span class="fee-amount">₹ 200</span>
+                    </div>
+                    <div class="fee-total">
+                        <span class="fee-label">Total (from)</span>
+                        <span class="fee-amount">₹ 400</span>
+                    </div>
+                </div>
+                <div class="card-includes">
+                    <h4>What's Included</h4>
+                    <ul class="includes-list">
+                        <li><span class="dot">✓</span> Address / name change support</li>
+                        <li><span class="dot">✓</span> Photo & signature re-upload</li>
+                        <li><span class="dot">✓</span> No driving test required</li>
+                        <li><span class="dot">✓</span> Home delivery of new card</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="service-form.html" class="card-cta">Apply for Renewal →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICE CARDS – Row 2 -->
+        <div class="services-grid-2 reveal">
+
+            <!-- INTERNATIONAL PERMIT -->
+            <div class="service-card" id="service-idp">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #FEF3C7;">🌍</div>
+                    <div class="card-header-text">
+                        <h3>International Permit</h3>
+                        <p>Get an International Driving Permit (IDP) to drive legally in foreign countries. Valid for 1 year.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="fee-row">
+                        <span class="fee-label">IDP Application Fee</span>
+                        <span class="fee-amount">₹ 500</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">Booklet Fee</span>
+                        <span class="fee-amount">₹ 500</span>
+                    </div>
+                    <div class="fee-total">
+                        <span class="fee-label">Total</span>
+                        <span class="fee-amount">₹ 1,000</span>
+                    </div>
+                </div>
+                <div class="card-includes">
+                    <h4>What's Included</h4>
+                    <ul class="includes-list">
+                        <li><span class="dot">✓</span> IDP booklet valid in 150+ countries</li>
+                        <li><span class="dot">✓</span> Online application & tracking</li>
+                        <li><span class="dot">✓</span> Passport copy verification</li>
+                        <li><span class="dot">✓</span> Speed post delivery</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="service-form.html" class="card-cta">Apply for IDP →</a>
+                </div>
+            </div>
+
+            <!-- DUPLICATE LICENCE -->
+            <div class="service-card" id="service-duplicate">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #EDE9FE;">📋</div>
+                    <div class="card-header-text">
+                        <h3>Duplicate Licence</h3>
+                        <p>Apply for a duplicate if your original Driving Licence is lost, damaged, or stolen.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="fee-row">
+                        <span class="fee-label">Duplicate Issue Fee</span>
+                        <span class="fee-amount">₹ 200</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">Smart Card Fee</span>
+                        <span class="fee-amount">₹ 200</span>
+                    </div>
+                    <div class="fee-total">
+                        <span class="fee-label">Total</span>
+                        <span class="fee-amount">₹ 400</span>
+                    </div>
+                </div>
+                <div class="card-includes">
+                    <h4>What's Included</h4>
+                    <ul class="includes-list">
+                        <li><span class="dot">✓</span> FIR / police report upload</li>
+                        <li><span class="dot">✓</span> Re-verification of documents</li>
+                        <li><span class="dot">✓</span> New smart card issued</li>
+                        <li><span class="dot">✓</span> Same DL number retained</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="service-form.html" class="card-cta">Apply for Duplicate →</a>
+                </div>
+            </div>
+
+            <!-- APPOINTMENT BOOKING -->
+            <div class="service-card" id="service-appointment">
+                <div class="card-header">
+                    <div class="card-icon" style="background: #FEE2E2;">📅</div>
+                    <div class="card-header-text">
+                        <h3>RTO Appointment</h3>
+                        <p>Book an appointment at your nearest RTO office for tests, verification, or other services.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="fee-row">
+                        <span class="fee-label">Appointment Fee</span>
+                        <span class="fee-amount">Free</span>
+                    </div>
+                    <div class="fee-row">
+                        <span class="fee-label">Rescheduling Fee</span>
+                        <span class="fee-amount">Free</span>
+                    </div>
+                    <div class="fee-total">
+                        <span class="fee-label">Total</span>
+                        <span class="fee-amount">₹ 0</span>
+                    </div>
+                </div>
+                <div class="card-includes">
+                    <h4>What's Included</h4>
+                    <ul class="includes-list">
+                        <li><span class="dot">✓</span> Choose RTO, date & time slot</li>
+                        <li><span class="dot">✓</span> Instant booking confirmation</li>
+                        <li><span class="dot">✓</span> SMS & email reminders</li>
+                        <li><span class="dot">✓</span> Cancel or reschedule anytime</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="appointment-enhanced.html" class="card-cta">Book Appointment →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="comparison-section reveal">
+        <div class="section-label">📊 Compare Services</div>
+        <h2 class="section-title">Service Comparison at a Glance</h2>
+        <p class="section-desc">Compare fees, processing times, and features across all DriveEase services.</p>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Learner Licence</th>
+                    <th>Driving Licence</th>
+                    <th>Renewal</th>
+                    <th>International Permit</th>
+                    <th>Duplicate</th>
+                    <th>Appointment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total Fee</td>
+                    <td><span class="table-fee">₹ 400</span></td>
+                    <td><span class="table-fee">₹ 700</span></td>
+                    <td><span class="table-fee">₹ 400+</span></td>
+                    <td><span class="table-fee">₹ 1,000</span></td>
+                    <td><span class="table-fee">₹ 400</span></td>
+                    <td><span class="table-fee">Free</span></td>
+                </tr>
+                <tr>
+                    <td>Processing Time</td>
+                    <td><span class="table-text">24–48 hrs</span></td>
+                    <td><span class="table-text">7–15 days</span></td>
+                    <td><span class="table-text">7–10 days</span></td>
+                    <td><span class="table-text">3–5 days</span></td>
+                    <td><span class="table-text">7–10 days</span></td>
+                    <td><span class="table-text">Instant</span></td>
+                </tr>
+                <tr>
+                    <td>Validity</td>
+                    <td><span class="table-text">6 months</span></td>
+                    <td><span class="table-text">20 years</span></td>
+                    <td><span class="table-text">20 years</span></td>
+                    <td><span class="table-text">1 year</span></td>
+                    <td><span class="table-text">Same as original</span></td>
+                    <td><span class="table-text">One-time</span></td>
+                </tr>
+                <tr>
+                    <td>Online Application</td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Document Upload</td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                </tr>
+                <tr>
+                    <td>Written / Online Test</td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                </tr>
+                <tr>
+                    <td>Driving Test</td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                </tr>
+                <tr>
+                    <td>Slot Booking</td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Smart Card Issued</td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-cross">✗</span></td>
+                </tr>
+                <tr>
+                    <td>Status Tracking</td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>AI Chatbot Help</td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                    <td><span class="table-check">✓</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- INFO CARDS -->
+    <section class="info-section reveal">
+        <div class="info-grid">
+            <div class="info-card">
+                <h4>💳 Payment Modes</h4>
+                <p>Pay securely via SBI ePay, HDFC Bank, Razorpay, UPI, net banking, or debit/credit cards. All transactions are encrypted and government-approved.</p>
+            </div>
+            <div class="info-card">
+                <h4>📞 Need Help?</h4>
+                <p>Contact our 24/7 helpdesk at <strong>1800-123-4455</strong> (toll-free) or visit your nearest Sewa Kendra. Our AI chatbot is also available on every page.</p>
+            </div>
+            <div class="info-card">
+                <h4>⚠️ Important Note</h4>
+                <p>Fees are as per Government of India norms and may vary slightly by state. Additional charges may apply for late submissions or endorsements.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="reveal" style="text-align: center; margin-bottom: 40px;">
+            <div class="section-label" style="margin: 0 auto 16px;">❓ FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-desc" style="margin: 12px auto 0;">Quick answers about service fees and process.</p>
+        </div>
+
+        <div class="faq-item reveal">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Are these fees the same across all states?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    The base fees are set by the central government and remain largely the same across India. However, some states may levy minor additional charges or surcharges. The exact amount will be shown during the payment step.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Can I pay online or do I need to visit the RTO?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    All fees can be paid 100% online through DriveEase. We support SBI ePay, HDFC Bank, Razorpay, UPI, net banking, and debit/credit cards. No need to carry cash or visit the RTO for payment.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Are fees refundable if my application is rejected?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    As per government policy, fees once paid are non-refundable. If your application is rejected, you may need to re-apply and pay the fees again. We recommend double-checking all documents before submission.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Is there any convenience fee charged by DriveEase?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    No. DriveEase is a government portal and does not charge any additional convenience or service fee. The prices shown are the exact government-mandated fees you'll pay.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item reveal">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                What documents are required for each service?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Common documents include Aadhaar Card, Proof of Address, Passport-size photo, and signature. For DL, you'll also need your LL certificate. For IDP, a valid passport is required. Full document lists are shown during the application process.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section reveal">
+        <div class="cta-box">
+            <h2>Ready to Apply?</h2>
+            <p>Start your application today — 100% online, no queues, no hassle. Track your application in real-time from your dashboard.</p>
+            <a href="portal.html" class="btn-white">Go to Portal →</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                    <div class="brand-emblem" style="width:40px;height:40px;font-size:18px">D</div>
+                    <div class="brand-name" style="color:white">Drive<span style="color:var(--teal)">Ease</span></div>
+                </div>
+                <p>Official portal of the Ministry of Road Transport &amp; Highways, Government of India.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Pages</h5>
+                <a href="portal.html">Portal</a>
+                <a href="about.html">About</a>
+                <a href="product.html">Product</a>
+                <a href="pricing.html">Pricing</a>
+            </div>
+            <div class="footer-col">
+                <h5>Services</h5>
+                <a href="learners-licence.html">Learner Licence</a>
+                <a href="driving-licence.html">Driving Licence</a>
+                <a href="appointment-enhanced.html">Appointments</a>
+            </div>
+            <div class="footer-col">
+                <h5>Quick Links</h5>
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+                <a href="sitemap.html">Sitemap</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 DriveEase · Ministry of Road Transport &amp; Highways, Govt. of India.</div>
+            <div style="display:flex;gap:14px"><span>NIC</span><span>Digital India</span></div>
+        </div>
+    </footer>
+
+    <script>
+        // ─── FAQ TOGGLE ───
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(faq => faq.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        }
+
+        // ─── SCROLL REVEAL ───
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+
+    <!-- CHATBOT -->
+    <style>
+        .chatbot-btn { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: linear-gradient(135deg, #1A4FD6, #0EA5E9); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(26, 79, 214, 0.4); color: white; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; z-index: 3000; transition: transform 0.2s; }
+        .chatbot-btn:hover { transform: scale(1.1); }
+        .chatbot-badge { position: absolute; top: 0; right: 0; width: 16px; height: 16px; background: #F59E0B; border-radius: 50%; border: 2px solid white; }
+    </style>
+
+    <button class="chatbot-btn" onclick="toggleChat()" title="DriveEase Virtual Assistant">
+        <img src="chatbot-logo.svg" alt="DEVA Logo" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+        <span class="chatbot-badge"></span>
+    </button>
+
+    <script src="chatbot-knowledge.js"></script>
+    <script src="chatbot-nlp.js"></script>
+    <script src="chatbot-ui.js"></script>
+
+</body>
+
+</html>

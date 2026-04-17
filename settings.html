@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings – DriveEase</title>
+    <meta name="description" content="Manage your DriveEase account settings, notifications, privacy, and security preferences." />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --navy: #0D1B3E; --blue: #1A4FD6; --sky: #3B82F6; --teal: #0EA5E9;
+            --accent: #F59E0B; --green: #10B981; --light: #F0F6FF; --white: #FFFFFF;
+            --gray: #6B7280; --gray-light: #E5EDF8; --text: #1E293B; --radius: 14px;
+            --shadow: 0 4px 24px rgba(26, 79, 214, 0.10);
+            --shadow-lg: 0 12px 40px rgba(13, 27, 62, 0.14);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        h1,h2,h3,h4,h5 { font-family: 'Sora', sans-serif; }
+
+        .topbar { background: var(--navy); color: #A8C4F5; font-size: 0.75rem; padding: 6px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+        .topbar a { color: #A8C4F5; text-decoration: none; margin-left: 16px; }
+        header { background: var(--white); box-shadow: 0 2px 12px rgba(13,27,62,0.06); position: sticky; top: 0; z-index: 100; }
+        .header-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 68px; }
+        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .brand-emblem { width: 42px; height: 42px; background: linear-gradient(135deg, var(--blue), var(--teal)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.25rem; }
+        .brand-name { font-family: 'Sora', sans-serif; font-size: 1.375rem; font-weight: 700; color: var(--navy); }
+        .brand-name span { color: var(--blue); }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 10px; font-weight: 600; font-size: 0.875rem; text-decoration: none; cursor: pointer; transition: all 0.2s; border: 1.5px solid transparent; font-family: inherit; }
+        .btn-primary { background: var(--blue); color: white; border-color: var(--blue); }
+        .btn-primary:hover { background: #1542B0; }
+        .btn-outline { background: transparent; color: var(--text); border-color: var(--gray-light); }
+        .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+        .btn-back { background: transparent; color: var(--gray); border: none; padding: 8px 0; font-size: 0.875rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s; text-decoration: none; }
+        .btn-back:hover { color: var(--blue); }
+        .btn-danger { background: #FEF2F2; color: #DC2626; border-color: #FECACA; }
+        .btn-danger:hover { background: #FEE2E2; }
+        .btn-success { background: var(--green); color: white; border-color: var(--green); }
+        .btn-success:hover { background: #059669; }
+        .lang-select { background: var(--light); border: 1.5px solid var(--gray-light); border-radius: 10px; padding: 8px 12px; font-size: 0.8125rem; cursor: pointer; color: var(--text); font-family: inherit; }
+        .user-profile { position: relative; }
+        .profile-btn { display: flex; align-items: center; gap: 8px; background: var(--light); border: 1.5px solid var(--gray-light); border-radius: 12px; padding: 6px 14px 6px 6px; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+        .profile-btn:hover { border-color: var(--blue); background: white; }
+        .profile-btn .avatar { width: 32px; height: 32px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-family: 'Sora', sans-serif; font-size: 0.75rem; font-weight: 700; }
+        .profile-btn .user-name { font-size: 0.8125rem; font-weight: 600; color: var(--text); }
+        .hamburger { display: none; width: 36px; height: 36px; background: none; border: none; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
+        .hamburger span { width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
+
+        .main-wrap { max-width: 800px; margin: 0 auto; padding: 40px 32px 80px; }
+        .page-header { margin-bottom: 32px; animation: slideInDown 0.5s ease; }
+        .page-header h1 { font-size: 2.25rem; color: var(--navy); margin-bottom: 8px; }
+        .page-header p { color: var(--gray); font-size: 1.0625rem; }
+
+        /* ─── SETTINGS SECTIONS ─── */
+        .settings-section {
+            background: var(--white); border-radius: 20px; padding: 28px;
+            border: 1px solid var(--gray-light); box-shadow: var(--shadow);
+            margin-bottom: 20px; transition: all 0.3s ease;
+            animation: fadeInUp 0.4s ease both;
+        }
+        .settings-section:nth-child(1) { animation-delay: 0.1s; }
+        .settings-section:nth-child(2) { animation-delay: 0.15s; }
+        .settings-section:nth-child(3) { animation-delay: 0.2s; }
+        .settings-section:nth-child(4) { animation-delay: 0.25s; }
+        .settings-section:nth-child(5) { animation-delay: 0.3s; }
+        .settings-section:hover { box-shadow: var(--shadow-lg); }
+        .section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-light); }
+        .section-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.375rem;
+        }
+        .section-title h3 { font-size: 1.0625rem; color: var(--navy); font-weight: 600; }
+        .section-title p { font-size: 0.8125rem; color: var(--gray); margin-top: 2px; }
+
+        /* ─── SETTING ROW ─── */
+        .setting-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; border-bottom: 1px solid #F1F5F9;
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-info h4 { font-size: 0.9375rem; color: var(--text); font-weight: 600; margin-bottom: 2px; }
+        .setting-info p { font-size: 0.8125rem; color: var(--gray); }
+
+        /* ─── TOGGLE SWITCH ─── */
+        .toggle { position: relative; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0; }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--gray-light); border-radius: 13px;
+            transition: all 0.3s ease;
+        }
+        .toggle-slider::before {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            border-radius: 50%; background: white;
+            left: 3px; bottom: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        .toggle input:checked + .toggle-slider { background: var(--blue); }
+        .toggle input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+        /* ─── SELECT DROPDOWN ─── */
+        .setting-select {
+            padding: 8px 14px; border: 1.5px solid var(--gray-light);
+            border-radius: 10px; font-size: 0.8125rem; background: var(--light);
+            cursor: pointer; color: var(--text); font-family: inherit;
+            transition: border-color 0.2s; outline: none;
+        }
+        .setting-select:focus { border-color: var(--blue); }
+
+        /* ─── INPUT ─── */
+        .setting-input {
+            padding: 8px 14px; border: 1.5px solid var(--gray-light);
+            border-radius: 10px; font-size: 0.8125rem; background: var(--light);
+            color: var(--text); font-family: inherit; width: 200px;
+            transition: border-color 0.2s; outline: none;
+        }
+        .setting-input:focus { border-color: var(--blue); }
+
+        /* ─── ACTION SECTION ─── */
+        .actions-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(13,27,62,0.4); backdrop-filter: blur(4px); z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+        .user-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 320px; background: var(--white); z-index: 2001; box-shadow: -4px 0 24px rgba(13,27,62,0.15); transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; }
+        .user-sidebar.active { transform: translateX(0); }
+        .sidebar-header { padding: 24px; background: var(--navy); color: white; display: flex; justify-content: space-between; align-items: flex-start; }
+        .sidebar-close { background: rgba(255,255,255,0.1); border: none; color: white; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; font-size: 1.25rem; }
+        .sidebar-close:hover { background: rgba(255,255,255,0.2); }
+        .sidebar-user-info { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+        .sidebar-user-info .avatar { width: 56px; height: 56px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 700; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .sidebar-body { padding: 24px; flex-grow: 1; overflow-y: auto; }
+        .sidebar-menu { display: flex; flex-direction: column; gap: 6px; }
+        .sidebar-menu a { display: flex; align-items: center; gap: 14px; padding: 12px 16px; text-decoration: none; color: var(--text); font-weight: 500; border-radius: 12px; transition: all 0.2s; font-size: 0.9375rem; }
+        .sidebar-menu a:hover { background: var(--light); color: var(--blue); transform: translateX(4px); }
+        .sidebar-menu a.active-link { background: var(--light); color: var(--blue); font-weight: 600; }
+        .sidebar-menu .icon { font-size: 1.25rem; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: transform 0.2s; }
+        .sidebar-menu a:hover .icon { transform: scale(1.1); }
+        .sidebar-footer { padding: 24px; border-top: 1px solid var(--gray-light); }
+
+        .chatbot-btn { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: linear-gradient(135deg, var(--blue), var(--teal)); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(26,79,214,0.4); color: white; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; z-index: 3000; transition: transform 0.2s; }
+        .chatbot-btn:hover { transform: scale(1.1); }
+        .chatbot-badge { position: absolute; top: 0; right: 0; width: 16px; height: 16px; background: var(--accent); border-radius: 50%; border: 2px solid white; }
+
+        footer { background: var(--navy); color: #94A3C8; padding: 48px 32px 0; margin-top: 48px; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
+        .footer-brand p { font-size: 0.875rem; line-height: 1.7; margin-top: 12px; }
+        .footer-col h5 { color: white; font-size: 0.875rem; margin-bottom: 16px; }
+        .footer-col a { display: block; color: #94A3C8; text-decoration: none; font-size: 0.8125rem; padding: 4px 0; transition: color 0.15s; }
+        .footer-col a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; max-width: 1280px; margin: 0 auto; }
+        .footer-logos { display: flex; gap: 12px; }
+        .footer-logo-box { background: rgba(255,255,255,0.06); padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; color: #94A3C8; border: 1px solid rgba(255,255,255,0.08); }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            .main-wrap { padding: 24px 16px 60px; }
+            .page-header h1 { font-size: 1.75rem; }
+            .header-inner { padding: 0 16px; }
+            .topbar { padding: 6px 16px; }
+            .setting-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .hamburger { display: flex; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <div>🇮🇳 Ministry of Road Transport &amp; Highways, Government of India</div>
+        <div><a href="#">Screen Reader</a><a href="sitemap.html">Sitemap</a><a href="about.html">About DriveEase</a><a href="product.html">Product</a></div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleUserSidebar()"></div>
+    <div class="user-sidebar" id="userSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-user-info">
+                <div class="avatar" id="sidebar-avatar">HK</div>
+                <div>
+                    <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:2px" id="sidebar-name">Hemanshu Kacha</h3>
+                    <div style="font-size:0.75rem;color:rgba(255,255,255,0.7)">GJ-01-2024-XXXX</div>
+                </div>
+            </div>
+            <button class="sidebar-close" onclick="toggleUserSidebar()">&times;</button>
+        </div>
+        <div class="sidebar-body">
+            <div class="sidebar-menu">
+                <a href="profile.html"><div class="icon">👤</div> My Profile</a>
+                <a href="my-applications.html"><div class="icon">📄</div> My Applications</a>
+                <a href="payment-history.html"><div class="icon">💳</div> Payment History</a>
+                <a href="settings.html" class="active-link"><div class="icon">⚙️</div> Settings</a>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-outline" style="width:100%;justify-content:center;color:#EF4444;border-color:#EF4444" onclick="doLogout(); return false;">🚪 Logout</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-inner">
+            <a class="brand" href="portal.html" style="margin-left:-24px">
+                <div class="brand-emblem">D</div>
+                <div class="brand-text"><div class="brand-name">Drive<span>Ease</span></div></div>
+            </a>
+            <div class="header-actions">
+                <select class="lang-select" onchange="changeLang(this.value)">
+                    <option value="en">🌐 English</option><option value="gu">ગુજરાતી</option><option value="hi">हિंदी</option>
+                </select>
+                <div class="user-profile" id="user-profile">
+                    <button class="profile-btn" onclick="toggleUserSidebar()">
+                        <div class="avatar">HK</div>
+                        <span class="user-name">Hemanshu Kacha</span>
+                    </button>
+                </div>
+                <a href="portal.html" class="btn btn-outline">← Back to Portal</a>
+                <button class="hamburger" onclick="toggleMobileNav()" id="hamburger"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-wrap">
+        <a href="portal.html" class="btn-back" style="margin-bottom:16px">← Back to Dashboard</a>
+
+        <div class="page-header">
+            <h1>⚙️ Settings</h1>
+            <p>Manage your account preferences, notifications, and security settings.</p>
+        </div>
+
+        <!-- Notifications -->
+        <div class="settings-section">
+            <div class="section-title">
+                <div class="section-icon" style="background:#EFF6FF">🔔</div>
+                <div>
+                    <h3>Notifications</h3>
+                    <p>Control how and when you receive updates</p>
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>SMS Notifications</h4>
+                    <p>Receive application status updates via SMS</p>
+                </div>
+                <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Email Notifications</h4>
+                    <p>Get email alerts for important updates</p>
+                </div>
+                <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Payment Receipts</h4>
+                    <p>Auto-send payment receipts to your email</p>
+                </div>
+                <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Promotional Updates</h4>
+                    <p>Receive news about new features and government schemes</p>
+                </div>
+                <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+            </div>
+        </div>
+
+        <!-- Language & Accessibility -->
+        <div class="settings-section">
+            <div class="section-title">
+                <div class="section-icon" style="background:#F0FDF4">🌐</div>
+                <div>
+                    <h3>Language & Accessibility</h3>
+                    <p>Customize your portal experience</p>
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Language</h4>
+                    <p>Select your preferred language</p>
+                </div>
+                <select class="setting-select">
+                    <option>English</option>
+                    <option>ગુજરાતી (Gujarati)</option>
+                    <option>हिंदी (Hindi)</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Font Size</h4>
+                    <p>Adjust text size for readability</p>
+                </div>
+                <select class="setting-select">
+                    <option>Small</option>
+                    <option selected>Normal</option>
+                    <option>Large</option>
+                    <option>Extra Large</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>High Contrast Mode</h4>
+                    <p>Improve visibility with high contrast colors</p>
+                </div>
+                <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Screen Reader Support</h4>
+                    <p>Optimize portal for screen readers</p>
+                </div>
+                <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+            </div>
+        </div>
+
+        <!-- Privacy & Security -->
+        <div class="settings-section">
+            <div class="section-title">
+                <div class="section-icon" style="background:#FDF4FF">🛡️</div>
+                <div>
+                    <h3>Privacy & Security</h3>
+                    <p>Manage your account security</p>
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Two-Factor Authentication</h4>
+                    <p>Add an extra layer of security with OTP</p>
+                </div>
+                <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Login Alerts</h4>
+                    <p>Get notified when someone logs into your account</p>
+                </div>
+                <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Change Password</h4>
+                    <p>Update your account password</p>
+                </div>
+                <button class="btn btn-outline" onclick="alert('Password change form will open. A verification OTP will be sent to your registered mobile number.')">Change</button>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Active Sessions</h4>
+                    <p>1 active session on this device</p>
+                </div>
+                <button class="btn btn-outline" onclick="alert('All other sessions have been logged out successfully.')">Manage</button>
+            </div>
+        </div>
+
+        <!-- Account -->
+        <div class="settings-section">
+            <div class="section-title">
+                <div class="section-icon" style="background:#FFF7ED">👤</div>
+                <div>
+                    <h3>Account</h3>
+                    <p>Manage your account information</p>
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Update Mobile Number</h4>
+                    <p>Change your registered mobile number</p>
+                </div>
+                <a href="service-form.html?service=Mobile+Number+Update" class="btn btn-outline">Update</a>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Download My Data</h4>
+                    <p>Export all your account data as PDF</p>
+                </div>
+                <button class="btn btn-outline" onclick="alert('📥 Your data export is being prepared. You will receive a download link shortly via email.')">Export</button>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Delete Account</h4>
+                    <p>Permanently delete your DriveEase account</p>
+                </div>
+                <button class="btn btn-danger" onclick="if(confirm('⚠️ Are you sure? This action is irreversible and will delete all your data.')) alert('Account deletion request submitted. You will receive a confirmation email within 24 hours.')">Delete</button>
+            </div>
+        </div>
+
+        <!-- Save -->
+        <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:8px;animation:fadeInUp 0.4s ease 0.4s both;">
+            <button class="btn btn-outline" onclick="alert('Changes discarded.')">Cancel</button>
+            <button class="btn btn-success" onclick="alert('✅ Settings saved successfully!')">💾 Save Changes</button>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                    <div class="brand-emblem" style="width:40px;height:40px;font-size:18px">D</div>
+                    <div class="brand-name" style="color:white">Drive<span style="color:var(--teal)">Ease</span></div>
+                </div>
+                <p>Official portal of the Ministry of Road Transport &amp; Highways, Government of India.</p>
+            </div>
+            <div class="footer-col"><h5>Licence Services</h5><a href="learners-licence.html">Apply Learner Licence</a><a href="driving-licence.html">Apply Driving Licence</a><a href="service-form.html?service=Renewal+Duplicate+DL">DL Renewal</a></div>
+            <div class="footer-col"><h5>Quick Links</h5><a href="portal.html">Dashboard</a><a href="profile.html">My Profile</a><a href="payment-history.html">Payment History</a></div>
+            <div class="footer-col"><h5>Resources</h5><a href="about.html">About DriveEase</a><a href="pricing.html">Service Fees</a><a href="sitemap.html">Sitemap</a></div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 DriveEase · Ministry of Road Transport &amp; Highways, Govt. of India. All rights reserved.</div>
+            <div class="footer-logos"><div class="footer-logo-box">NIC</div><div class="footer-logo-box">Digital India</div><div class="footer-logo-box">G20 India</div></div>
+        </div>
+    </footer>
+
+    <button class="chatbot-btn" onclick="toggleChat()" title="DriveEase Virtual Assistant">
+        <img src="chatbot-logo.svg" alt="DEVA" style="width:32px;height:32px;filter:brightness(0) invert(1);">
+        <span class="chatbot-badge"></span>
+    </button>
+
+    <script>
+        function toggleUserSidebar() {
+            document.getElementById('userSidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+
+        function checkLoginState() {
+            const isLoggedIn = localStorage.getItem('driveease_logged_in') === 'true';
+            if (!isLoggedIn) { window.location.href = 'login.html'; return; }
+            const userName = localStorage.getItem('driveease_user_name') || 'Hemanshu Kacha';
+            const nameParts = userName.trim().split(' ');
+            const initials = nameParts.length >= 2 ? (nameParts[0][0] + nameParts[nameParts.length-1][0]).toUpperCase() : userName.slice(0,2).toUpperCase();
+            document.getElementById('sidebar-avatar').textContent = initials;
+            document.getElementById('sidebar-name').textContent = userName;
+            const avatarEl = document.querySelector('.profile-btn .avatar');
+            const nameEl = document.querySelector('.profile-btn .user-name');
+            if (avatarEl) avatarEl.textContent = initials;
+            if (nameEl) nameEl.textContent = userName;
+        }
+        window.addEventListener('load', checkLoginState);
+
+        function doLogout() { localStorage.removeItem('driveease_logged_in'); localStorage.removeItem('driveease_user_name'); window.location.href = 'login.html'; }
+        function changeLang(val) { const msgs = { gu: 'ગુજરાતી ભાષામાં આવકાર!', hi: 'हिंदी में आपका स्वागत है!' }; if (msgs[val]) alert(msgs[val]); }
+        function toggleMobileNav() { document.getElementById('main-nav')?.classList.toggle('open'); document.getElementById('hamburger')?.classList.toggle('open'); }
+    </script>
+    <script src="chatbot-knowledge.js"></script>
+    <script src="chatbot-nlp.js"></script>
+    <script src="chatbot-ui.js"></script>
+</body>
+</html>

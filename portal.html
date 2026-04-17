@@ -1,0 +1,3542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DriveEase – Smart Licence Portal</title>
+    <meta name="description"
+        content="DriveEase – Apply, renew and manage your driving licence online. Fast, secure, and paperless." />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --navy: #0D1B3E;
+            --blue: #1A4FD6;
+            --sky: #3B82F6;
+            --teal: #0EA5E9;
+            --accent: #F59E0B;
+            --green: #10B981;
+            --light: #F0F6FF;
+            --white: #FFFFFF;
+            --gray: #6B7280;
+            --gray-light: #E5EDF8;
+            --text: #1E293B;
+            --radius: 14px;
+            --shadow: 0 4px 24px rgba(26, 79, 214, 0.10);
+            --shadow-lg: 0 12px 40px rgba(13, 27, 62, 0.14);
+            --font-size-base: 16px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: var(--font-size-base);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        /* ─── TOPBAR ─── */
+        .topbar {
+            background: var(--navy);
+            color: #A8C4F5;
+            font-size: 0.75rem;
+            padding: 6px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .topbar a {
+            color: #A8C4F5;
+            text-decoration: none;
+            margin-left: 16px;
+        }
+
+        .topbar a:hover {
+            color: var(--accent);
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(13, 27, 62, 0.07);
+        }
+
+        .header-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .brand-emblem {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--navy), var(--blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Sora', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            flex-shrink: 0;
+        }
+
+        .brand-text {
+            line-height: 1.2;
+        }
+
+        .brand-name {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .brand-name span {
+            color: var(--blue);
+        }
+
+        .brand-sub {
+            font-size: 0.69rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            padding: 8px 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.15s, color 0.15s;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: var(--light);
+            color: var(--blue);
+        }
+
+        .nav-btn svg {
+            transition: transform 0.2s;
+        }
+
+        .nav-btn.open svg {
+            transform: rotate(180deg);
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 240px;
+            padding: 8px;
+            z-index: 999;
+            border: 1px solid var(--gray-light);
+            animation: dropIn 0.18s ease;
+        }
+
+        .dropdown.open {
+            display: block;
+        }
+
+        @keyframes dropIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px 14px;
+            font-size: 0.8125rem;
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dropdown a:hover {
+            background: var(--light);
+            color: var(--blue);
+            transform: translateX(4px);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-select {
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 0.8125rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--light);
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* ─── USER PROFILE ─── */
+        .user-profile {
+            position: relative;
+        }
+
+        .profile-btn {
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            padding: 6px 14px 6px 6px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.15s;
+        }
+
+        .profile-btn:hover,
+        .profile-btn.open {
+            background: white;
+            border-color: var(--blue);
+            box-shadow: 0 2px 8px rgba(26, 79, 214, 0.1);
+        }
+
+        .profile-btn .avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile-menu {
+            right: 0;
+            left: auto;
+            min-width: 220px;
+        }
+
+        .profile-header {
+            padding: 10px 14px;
+        }
+
+        .btn {
+            padding: 9px 20px;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.18s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: white;
+            box-shadow: 0 2px 8px rgba(26, 79, 214, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 79, 214, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(26, 79, 214, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--blue);
+            border: 1.5px solid var(--blue);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-outline:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            background: linear-gradient(135deg, var(--navy) 0%, #1A3A8F 60%, #1A5FBF 100%);
+            color: white;
+            padding: 56px 32px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.07);
+        }
+
+        .hero-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(245, 158, 11, 0.18);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 span {
+            color: var(--teal);
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.65;
+            max-width: 480px;
+            margin-bottom: 28px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            padding: 13px 28px;
+            font-size: 0.9375rem;
+            border-radius: 12px;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--navy);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-white:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Quick Status Card */
+        .status-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 28px;
+        }
+
+        .status-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 16px;
+            gap: 4px;
+        }
+
+        .status-tab {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.55);
+            background: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.15s;
+            text-align: center;
+        }
+
+        .status-tab.active {
+            background: white;
+            color: var(--navy);
+        }
+
+        .status-input {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        .status-input::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .status-input:focus {
+            border-color: var(--teal);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .status-result {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 10px;
+            font-size: 0.8125rem;
+            display: none;
+            animation: dropIn 0.2s ease;
+        }
+
+        .status-result.show {
+            display: block;
+        }
+
+        .status-result .res-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.69rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-result .res-val {
+            color: white;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .res-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-size: 0.69rem;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .res-badge.pending {
+            background: rgba(245, 158, 11, 0.3);
+            color: #FDE68A;
+        }
+
+        .res-badge.approved {
+            background: rgba(16, 185, 129, 0.3);
+            color: #6EE7B7;
+        }
+
+        /* ─── STATS BANNER ─── */
+        .stats-banner {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            padding: 0 32px;
+        }
+
+        .stats-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            padding: 18px 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+
+        .stat-num {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.6875rem;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* ─── ALERT BANNER ─── */
+        .alert-banner {
+            background: #FEF3C7;
+            border-left: 4px solid var(--accent);
+            padding: 12px 32px;
+            font-size: 0.8125rem;
+            color: #92400E;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ─── MAIN ─── */
+        .main-wrap {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 36px 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .section-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title span {
+            display: inline-block;
+            width: 4px;
+            height: 22px;
+            background: var(--blue);
+            border-radius: 2px;
+        }
+
+        .see-all {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .see-all:hover {
+            text-decoration: underline;
+        }
+
+        /* ─── SERVICES GRID ─── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            border: 1.5px solid transparent;
+            padding: 20px 14px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 6px rgba(13, 27, 62, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(26, 79, 214, 0.15);
+        }
+
+        .service-card:active {
+            transform: translateY(-2px) scale(0.99);
+            transition: all 0.1s;
+        }
+
+        .service-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.375rem;
+            flex-shrink: 0;
+        }
+
+        .service-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.5625rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 100px;
+            text-transform: uppercase;
+        }
+
+        /* ─── TWO COLUMN ─── */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .process-card {
+            background: var(--white);
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 1px 8px rgba(13, 27, 62, 0.07);
+        }
+
+        .process-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .ptab {
+            padding: 7px 16px;
+            border-radius: 100px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid var(--gray-light);
+            background: none;
+            color: var(--gray);
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.15s;
+        }
+
+        .ptab.active {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+
+        .ptab:hover:not(.active) {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        .process-content {
+            display: none;
+        }
+
+        .process-content.active {
+            display: block;
+        }
+
+        .tutorial-banner {
+            display: flex;
+            gap: 20px;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            align-items: center;
+        }
+        
+        .tutorial-text {
+            flex: 1;
+        }
+        
+        .tutorial-text h3 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 8px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tutorial-text p {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .tutorial-video {
+            width: 340px;
+            flex-shrink: 0;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 8px 20px rgba(13, 27, 62, 0.12);
+            border: 3px solid white;
+        }
+        
+        .tutorial-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .tutorial-banner {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 16px;
+                gap: 16px;
+            }
+            .tutorial-video {
+                width: 100%;
+            }
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            position: relative;
+            padding-bottom: 24px;
+            animation: fadeInUp 0.3s ease forwards;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .step:hover {
+            transform: translateX(4px);
+        }
+
+        .step.completed .step-num {
+            background: var(--green);
+            color: transparent;
+            position: relative;
+        }
+
+        .step.completed .step-num::after {
+            content: "✓";
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+        }
+
+        .step.completed .step-title {
+            color: var(--green);
+        }
+
+        .step.completed .step-desc,
+        .step.completed .step-docs {
+            opacity: 0.5;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step:last-child {
+            padding-bottom: 0;
+        }
+
+        .step-num-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: white;
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gray-light);
+            margin-top: 6px;
+            min-height: 20px;
+        }
+
+        .step:last-child .step-line {
+            display: none;
+        }
+
+        .step-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 0.8125rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .step-docs {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .doc-chip {
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.6875rem;
+            color: var(--navy);
+            font-weight: 500;
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .info-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 1px 8px rgba(13, 27, 62, 0.07);
+        }
+
+        .info-card h4 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .info-card h4 .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--blue);
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .slot-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .slot-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: var(--light);
+            border-radius: 10px;
+            font-size: 0.8125rem;
+        }
+
+        .slot-left {
+            font-weight: 500;
+            color: var(--navy);
+        }
+
+        .slot-meta {
+            font-size: 0.6875rem;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .slot-badge {
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+        }
+
+        .slot-badge.available {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .slot-badge.limited {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .slot-badge.full {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .notice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notice-item {
+            border-left: 3px solid var(--blue);
+            padding: 8px 10px;
+            background: var(--light);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.78125rem;
+            line-height: 1.5;
+        }
+
+        .notice-item .notice-tag {
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ─── eKYC ─── */
+        .ekyc-section {
+            margin-bottom: 40px;
+        }
+
+        .ekyc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .ekyc-card {
+            background: var(--white);
+            border: 1.5px solid var(--gray-light);
+            border-radius: var(--radius);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.18s;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .ekyc-card:hover {
+            border-color: var(--blue);
+            background: var(--light);
+            transform: translateX(3px);
+        }
+
+        .ekyc-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+
+        .ekyc-label {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.35;
+        }
+
+        .ekyc-tag {
+            margin-left: auto;
+            font-size: 0.5625rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tag-ekyc {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .tag-faceless {
+            background: #EDE9FE;
+            color: #5B21B6;
+        }
+
+        /* ─── TRACK ─── */
+        .track-section {
+            background: linear-gradient(135deg, #EFF6FF, #E0F2FE);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 40px;
+            border: 1px solid #BFDBFE;
+        }
+
+        .track-inner {
+            max-width: 600px;
+        }
+
+        .track-section h2 {
+            font-size: 1.25rem;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .track-section p {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .track-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .track-input {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 16px;
+            border: 1.5px solid #BFDBFE;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            color: var(--text);
+            background: white;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .track-input:focus {
+            border-color: var(--blue);
+        }
+
+        .track-result {
+            margin-top: 16px;
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1.5px solid #BFDBFE;
+        }
+
+        .track-result.show {
+            display: block;
+            animation: dropIn 0.2s ease;
+        }
+
+        .track-result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-light);
+            font-size: 0.8125rem;
+        }
+
+        .track-result-row:last-child {
+            border-bottom: none;
+        }
+
+        .track-result-label {
+            color: var(--gray);
+        }
+
+        .track-result-val {
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        /* ─── HELP ─── */
+        .help-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+
+        .help-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 1px 6px rgba(13, 27, 62, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            cursor: pointer;
+            transition: transform 0.18s, box-shadow 0.18s;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .help-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .help-icon {
+            font-size: 1.75rem;
+        }
+
+        .help-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .help-desc {
+            font-size: 0.78125rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--navy);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 32px 20px;
+            margin-top: 20px;
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 32px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand .brand-name {
+            color: white;
+            font-size: 1.125rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            margin-top: 10px;
+            max-width: 260px;
+        }
+
+        .footer-col h5 {
+            color: white;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 0.78125rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin-bottom: 7px;
+            transition: color 0.15s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.75rem;
+        }
+
+        .footer-logos {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .footer-logo-box {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ─── ACCESSIBILITY TOOLBAR ─── */
+        .a11y-bar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--navy);
+            border-radius: 12px 0 0 12px;
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 2000;
+            box-shadow: -2px 0 12px rgba(13, 27, 62, 0.2);
+        }
+
+        .a11y-label {
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 0.5625rem;
+            text-align: center;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 0 2px;
+        }
+
+        .a11y-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 0.9375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+        }
+
+        .a11y-btn:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .a11y-btn.active {
+            background: var(--accent);
+            color: var(--navy);
+        }
+
+        .a11y-font-sm {
+            font-size: 0.75rem !important;
+        }
+
+        .a11y-font-lg {
+            font-size: 1.0625rem !important;
+        }
+
+        .a11y-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 2px 0;
+        }
+
+        /* ─── HIGH CONTRAST ─── */
+        body.high-contrast {
+            background: #000 !important;
+            color: #FFF !important;
+            filter: contrast(1.6);
+        }
+
+        body.high-contrast .service-card,
+        body.high-contrast .process-card,
+        body.high-contrast .info-card,
+        body.high-contrast .ekyc-card {
+            background: #111 !important;
+            border-color: #FFF !important;
+            color: #FFF !important;
+        }
+
+        /* ─── HAMBURGER ─── */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: all 0.25s;
+        }
+
+        /* ─── LOGIN MODAL ─── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 27, 62, 0.6);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 24px;
+            width: 92%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: 0 24px 80px rgba(13, 27, 62, 0.3);
+            animation: dropIn 0.25s ease;
+            position: relative;
+        }
+
+        .login-left {
+            background: linear-gradient(160deg, var(--navy) 0%, #1A4FD6 100%);
+            padding: 48px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-left::before {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .login-left-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-left-logo .brand-emblem {
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+        }
+
+        .login-left h2 {
+            font-size: 1.75rem;
+            line-height: 1.25;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-left h2 span {
+            color: var(--teal);
+        }
+
+        .login-left p {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .login-feature-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9375rem;
+            flex-shrink: 0;
+        }
+
+        .login-right {
+            padding: 40px 36px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--light);
+            border: none;
+            cursor: pointer;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1.125rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            color: var(--text);
+            transition: background 0.15s;
+        }
+
+        .login-close:hover {
+            background: var(--gray-light);
+        }
+
+        .login-tabs {
+            display: flex;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 28px;
+            gap: 4px;
+        }
+
+        .login-tab {
+            flex: 1;
+            padding: 9px;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background: none;
+            color: var(--gray);
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.15s;
+        }
+
+        .login-tab.active {
+            background: white;
+            color: var(--blue);
+            box-shadow: 0 2px 8px rgba(26, 79, 214, 0.1);
+        }
+
+        .login-form-section {
+            display: none;
+        }
+
+        .login-form-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .form-group label span {
+            color: #EF4444;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--gray-light);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            background: white;
+        }
+
+        .form-control:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(26, 79, 214, 0.08);
+        }
+
+        .form-control.error {
+            border-color: #EF4444;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .field-error {
+            font-size: 0.75rem;
+            color: #EF4444;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        .pass-wrapper {
+            position: relative;
+        }
+
+        .pass-wrapper .form-control {
+            padding-right: 42px;
+        }
+
+        .pass-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray);
+            font-size: 1.0625rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            margin-top: 3px;
+            flex-shrink: 0;
+            accent-color: var(--blue);
+        }
+
+        .checkbox-row label {
+            font-size: 0.8125rem;
+            color: var(--gray);
+        }
+
+        .checkbox-row label a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            justify-content: center;
+            padding: 13px;
+            font-size: 0.9375rem;
+            border-radius: 12px;
+            margin-top: 6px;
+        }
+
+        .login-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-light);
+        }
+
+        .login-divider span {
+            font-size: 0.75rem;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+
+        .social-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1.5px solid var(--gray-light);
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.15s;
+        }
+
+        .social-btn:hover {
+            border-color: var(--blue);
+            background: var(--light);
+        }
+
+        .success-banner {
+            display: none;
+            background: #D1FAE5;
+            border: 1.5px solid #6EE7B7;
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.875rem;
+            color: #065F46;
+            font-weight: 600;
+        }
+
+        .success-banner.show {
+            display: flex;
+            animation: dropIn 0.2s ease;
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 16px 0;
+        }
+
+        .otp-input {
+            width: 48px;
+            height: 52px;
+            border: 1.5px solid var(--gray-light);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            font-family: 'Sora', sans-serif;
+            color: var(--navy);
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .otp-input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(26, 79, 214, 0.08);
+        }
+
+        .resend-link {
+            font-size: 0.8125rem;
+            color: var(--gray);
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .resend-link a {
+            color: var(--blue);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .strength-bar {
+            height: 4px;
+            border-radius: 2px;
+            background: var(--gray-light);
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 2px;
+            width: 0;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .strength-text {
+            font-size: 0.6875rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* ─── FRAUD MODAL ─── */
+        .fraud-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fraud-modal.open {
+            display: flex;
+        }
+
+        .fraud-box {
+            background: white;
+            border-radius: 20px;
+            padding: 36px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .fraud-box h3 {
+            font-size: 1.125rem;
+            color: #B91C1C;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fraud-box p {
+            font-size: 0.875rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .fraud-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--light);
+            border: none;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.125rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ─── VIDEO MODAL ─── */
+        .video-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 27, 62, 0.85);
+            z-index: 6000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .video-modal.open {
+            display: flex;
+            animation: dropIn 0.25s ease;
+        }
+
+        .video-box {
+            background: black;
+            border-radius: 16px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.15s;
+            line-height: 1;
+        }
+
+        .video-close:hover {
+            color: var(--accent);
+        }
+
+        /* ─── CHATBOT ─── */
+        .chatbot-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--blue), var(--teal));
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(26, 79, 214, 0.4);
+            color: white;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            transition: transform 0.2s;
+        }
+
+        .chatbot-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .status-card {
+                display: none;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            nav.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                inset: 0;
+                background: white;
+                z-index: 900;
+                padding: 80px 24px 24px;
+                gap: 0;
+                overflow-y: auto;
+            }
+
+            nav.open .nav-item {
+                width: 100%;
+            }
+
+            nav.open .nav-btn {
+                width: 100%;
+                justify-content: space-between;
+                font-size: 1rem;
+                padding: 14px 0;
+                border-bottom: 1px solid var(--gray-light);
+                border-radius: 0;
+            }
+
+            nav.open .dropdown {
+                position: static;
+                box-shadow: none;
+                border: none;
+                background: var(--light);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .login-box {
+                grid-template-columns: 1fr;
+                max-width: 480px;
+            }
+
+            .login-left {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 36px 20px 32px;
+            }
+
+            .main-wrap {
+                padding: 24px 16px;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .header-inner {
+                padding: 0 16px;
+            }
+
+            .topbar {
+                padding: 6px 16px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .otp-input {
+                width: 40px;
+                height: 46px;
+            }
+        }
+
+        /* ─── ANIMATIONS ─── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        .fade-in:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .fade-in:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .fade-in:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .fade-in:nth-child(4) {
+            animation-delay: 0.20s;
+        }
+
+        .fade-in:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .fade-in:nth-child(6) {
+            animation-delay: 0.30s;
+        }
+
+        .fade-in:nth-child(7) {
+            animation-delay: 0.35s;
+        }
+
+        .fade-in:nth-child(8) {
+            animation-delay: 0.40s;
+        }
+
+        /* ─── USER SIDEBAR DASHBOARD ─── */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 27, 62, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .user-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 320px;
+            background: var(--white);
+            z-index: 2001;
+            box-shadow: -4px 0 24px rgba(13, 27, 62, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .sidebar-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            font-size: 1.25rem;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .sidebar-user-info .avatar {
+            width: 56px;
+            height: 56px;
+            background: var(--blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-body {
+            padding: 24px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.2s;
+            font-size: 0.9375rem;
+        }
+
+        .sidebar-menu a:hover {
+            background: var(--light);
+            color: var(--blue);
+            transform: translateX(4px);
+        }
+
+        .sidebar-menu .icon {
+            font-size: 1.25rem;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s;
+        }
+
+        .sidebar-menu a:hover .icon {
+            transform: scale(1.1);
+            color: var(--blue);
+        }
+
+        .sidebar-footer {
+            padding: 24px;
+            border-top: 1px solid var(--gray-light);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <div>🇮🇳 Ministry of Road Transport &amp; Highways, Government of India</div>
+        <div>
+            <a href="#">Screen Reader</a>
+            <a href="#">Skip to Content</a>
+            <a href="sitemap.html">Sitemap</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="about.html">About DriveEase</a>
+            <a href="product.html">Product</a>
+        </div>
+    </div>
+
+    <!-- USER SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleUserSidebar()"></div>
+    <div class="user-sidebar" id="userSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-user-info">
+                <div class="avatar" id="sidebar-avatar">HK</div>
+                <div>
+                    <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:2px" id="sidebar-name">Hemanshu Kacha
+                    </h3>
+                    <div style="font-size:0.75rem;color:rgba(255,255,255,0.7)">GJ-01-2024-XXXX</div>
+                </div>
+            </div>
+            <button class="sidebar-close" onclick="toggleUserSidebar()">&times;</button>
+        </div>
+        <div class="sidebar-body">
+            <div class="sidebar-menu">
+                <a href="profile.html">
+                    <div class="icon">👤</div> My Profile
+                </a>
+                <a href="my-applications.html">
+                    <div class="icon">📄</div> My Applications
+                </a>
+                <a href="payment-history.html">
+                    <div class="icon">💳</div> Payment History
+                </a>
+                <a href="settings.html">
+                    <div class="icon">⚙️</div> Settings
+                </a>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-outline"
+                style="width:100%;justify-content:center;color:#EF4444;border-color:#EF4444"
+                onclick="doLogout(); return false;">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <a class="brand" href="#" style="margin-left:-24px">
+                <div class="brand-emblem">D</div>
+                <div class="brand-text">
+                    <div class="brand-name">Drive<span>Ease</span></div>
+                </div>
+            </a>
+
+            <nav id="main-nav">
+                <div class="nav-item">
+                    <button class="nav-btn" onclick="toggleDropdown(this)">
+                        Learner Licence
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <div class="dropdown">
+                        <a href="learners-licence.html">Application for New Learner Licence</a>
+                        <a href="service-form.html?service=Expired+Learner+Licence">Expired Learner Licence Issue
+                            Again</a>
+                        <a href="service-form.html?service=Application+Edit">Application Edit (Before Fee Payment)</a>
+                        <a href="service-form.html?service=Duplicate+LL">Services for Duplicate LL / Address Change</a>
+                        <a href="service-form.html?service=Print+Learner+Licence">Print Learner Licence (Form 3)</a>
+                        <a href="service-form.html?service=LL+Extract+Print">Learner Licence Extract Print</a>
+                        <a href="service-form.html?service=Tutorial+LL+Test">Tutorial for LL Test</a>
+                        <a href="service-form.html?service=Online+LL+Test">Online LL Test (Stall)</a>
+                        <a href="service-form.html?service=Mock+Test+LL">Mock Test for LL</a>
+                        <a href="service-form.html?service=Sample+Question+LL">Sample Question for LL Test</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <button class="nav-btn" onclick="toggleDropdown(this)">
+                        Driving Licence
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <div class="dropdown">
+                        <a href="driving-licence.html">New Driving Licence</a>
+                        <a href="service-form.html?service=Renewal+Duplicate+DL">Renewal / Duplicate / AEDL / IDP /
+                            Others</a>
+                        <a href="service-form.html?service=IDP+Print">IDP Print Licence</a>
+                        <a href="service-form.html?service=Print+DL">Print Driving Licence</a>
+                        <a href="service-form.html?service=DL+Club">DL Club</a>
+                        <a href="service-form.html?service=DL+Extract">DL Extract Print</a>
+                        <a href="service-form.html?service=Online+PSV+Badge">Online PSV Badge Test</a>
+                        <a href="service-form.html?service=Display+IDP">Display IDP Details</a>
+                        <a href="service-form.html?service=DL+Test+Sheet">Driving Licence Test Sheet</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <button class="nav-btn" onclick="toggleDropdown(this)">
+                        Conductor Licence
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <div class="dropdown">
+                        <a href="service-form.html?service=New+Conductor+Licence">New Conductor Licence</a>
+                        <a href="service-form.html?service=Temporary+CL">Temporary Conductor Licence</a>
+                        <a href="service-form.html?service=Services+on+CL">Services on Conductor Licence</a>
+                        <a href="service-form.html?service=Online+CL+Test">Online Conductor Licence Test</a>
+                        <a href="service-form.html?service=Print+CL">Print Conductors Licence</a>
+                        <a href="service-form.html?service=CL+Extract">CL Extract Print</a>
+                        <a href="service-form.html?service=Regularize+Provisional+CL">Regularize Provisional CL</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <button class="nav-btn" onclick="toggleDropdown(this)">
+                        Appointments
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <div class="dropdown">
+                        <a href="appointment.html?type=LL">LL Test Slot Booking</a>
+                        <a href="appointment.html?type=DL">DL Test Slot Booking</a>
+                        <a href="appointment.html?type=Services">DL Services Slot Booking</a>
+                        <a href="appointment.html?action=Cancel+LL">Cancel LL Test Slot</a>
+                        <a href="appointment.html?action=Cancel+DL">Cancel DL Test Slot</a>
+                        <a href="appointment.html?action=Cancel+Services">Cancel DL Services Slot</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <button class="nav-btn" onclick="toggleDropdown(this)">
+                        Others
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <div class="dropdown">
+                        <a href="service-form.html?service=Search+Related+Applications">Search Related Applications</a>
+                        <a href="service-form.html?service=DL+Search">DL Search</a>
+                        <a href="service-form.html?service=Find+Application+Number">Find Application Number</a>
+                        <a href="service-form.html?service=Cancel+Application">Cancel Application</a>
+                        <a href="service-form.html?service=Track+Dispatch">Track Dispatch Article Status</a>
+                        <a href="service-form.html?service=Mobile+Number+Update">Mobile Number Update</a>
+                        <a href="service-form.html?service=Camp+Registration">Camp Registration</a>
+                        <a href="service-form.html?service=Add+Class+Vehicles">Add Class of Vehicles</a>
+                        <a href="service-form.html?service=Fee+Payments">Fee Payments</a>
+                        <a href="service-form.html?service=Verify+Payment+Status">Verify Payment Status</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="header-actions">
+                <select class="lang-select" onchange="changeLang(this.value)">
+                    <option value="en">🌐 English</option>
+                    <option value="gu">ગુજરાતી</option>
+                    <option value="hi">हिंदी</option>
+                </select>
+                <div class="user-profile" id="user-profile">
+                    <button class="profile-btn" onclick="toggleUserSidebar()">
+                        <div class="avatar">HK</div>
+                        <span class="user-name">Hemanshu Kacha</span>
+                    </button>
+                </div>
+                <a href="#" class="btn btn-outline" onclick="scrollToTrack(event)">Track Application</a>
+                <a href="#" class="btn btn-primary" id="btn-login-main" style="display:none"
+                    onclick="openLogin(event)">Login / Register</a>
+                <button class="hamburger" onclick="toggleMobileNav()" id="hamburger">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div>
+                <div class="hero-tag">🏛️ Government of Gujarat · Official Portal</div>
+                <h1>Your Driving Licence,<br><span>Simplified &amp; Online</span></h1>
+                <p>Apply, renew, track, and manage all your driving and transport documents — completely online, without
+                    repeated RTO visits. Fast. Secure. Transparent.</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-white btn-hero" onclick="openLogin(event)">🪪 Apply for Licence</a>
+                    <a href="#" class="btn btn-ghost btn-hero" onclick="scrollToTrack(event)">📋 Track Application</a>
+                </div>
+            </div>
+
+            <!-- Quick Status Widget -->
+            <div class="status-card">
+                <h3>🔍 Quick Check</h3>
+                <div class="status-tabs">
+                    <button class="status-tab active" onclick="switchTab(this,'app')">Application</button>
+                    <button class="status-tab" onclick="switchTab(this,'dl')">DL Status</button>
+                    <button class="status-tab" onclick="switchTab(this,'slot')">Slot</button>
+                </div>
+                <div id="tab-app">
+                    <input class="status-input" id="appNum" placeholder="Application Number (e.g. GJ-12345)" />
+                    <input class="status-input" id="appDob" placeholder="Date of Birth (DD-MM-YYYY)" />
+                    <button class="btn btn-primary"
+                        style="width:100%;justify-content:center;border-radius:10px;padding:11px"
+                        onclick="checkStatus('app')">Check Status →</button>
+                    <div class="status-result" id="res-app">
+                        <div class="res-label">Application</div>
+                        <div class="res-val" id="res-app-num">GJ-12345</div>
+                        <div><span class="res-badge pending">Under Review</span></div>
+                        <div class="res-label" style="margin-top:8px">Estimated completion</div>
+                        <div class="res-val">5–7 Working Days</div>
+                    </div>
+                </div>
+                <div id="tab-dl" style="display:none">
+                    <input class="status-input" id="dlNum" placeholder="DL Number (e.g. GJ0120XXXXXXX)" />
+                    <input class="status-input" id="dlDob" placeholder="Date of Birth (DD-MM-YYYY)" />
+                    <button class="btn btn-primary"
+                        style="width:100%;justify-content:center;border-radius:10px;padding:11px"
+                        onclick="checkStatus('dl')">Search DL →</button>
+                    <div class="status-result" id="res-dl">
+                        <div class="res-label">DL Status</div>
+                        <div class="res-val" id="res-dl-num">GJ0120XXXXXXX</div>
+                        <div><span class="res-badge approved">Active &amp; Valid</span></div>
+                        <div class="res-label" style="margin-top:8px">Valid Until</div>
+                        <div class="res-val">31-03-2034</div>
+                    </div>
+                </div>
+                <div id="tab-slot" style="display:none">
+                    <input class="status-input" id="slotNum" placeholder="Application Number" />
+                    <button class="btn btn-primary"
+                        style="width:100%;justify-content:center;border-radius:10px;padding:11px"
+                        onclick="checkStatus('slot')">Check Slot →</button>
+                    <div class="status-result" id="res-slot">
+                        <div class="res-label">Slot Details</div>
+                        <div class="res-val">Ahmedabad RTO (GJ-01)</div>
+                        <div class="res-label" style="margin-top:6px">Date &amp; Time</div>
+                        <div class="res-val">22 Mar 2026 · 10:30 AM</div>
+                        <div><span class="res-badge approved">Confirmed</span></div>
+                    </div>
+                </div>
+                <p style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:10px;text-align:center;">Powered by
+                    official RTO database · Secure &amp; encrypted</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS BANNER -->
+    <div class="stats-banner">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <div class="stat-icon">🪪</div>
+                <div>
+                    <div class="stat-num">2.4M+</div>
+                    <div class="stat-label">Licences Issued Online</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">⚡</div>
+                <div>
+                    <div class="stat-num">eKYC</div>
+                    <div class="stat-label">Contactless Services</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">📍</div>
+                <div>
+                    <div class="stat-num">150+</div>
+                    <div class="stat-label">RTO Offices in Gujarat</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">❤️</div>
+                <div>
+                    <div class="stat-num">1.82Cr</div>
+                    <div class="stat-label">Organ Donor Pledges</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">📱</div>
+                <div>
+                    <div class="stat-num">DriveEase</div>
+                    <div class="stat-label">Official Mobile App</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <main class="main-wrap">
+
+
+        <!-- About DriveEase Preview -->
+        <div style="background:linear-gradient(135deg,rgba(26,79,214,0.05),rgba(16,185,129,0.05));border-radius:24px;padding:40px;margin-bottom:48px;display:flex;align-items:center;gap:40px"
+            class="about-preview">
+            <div style="flex:1">
+                <div class="hero-tag"
+                    style="background:white;color:var(--navy);border-color:#E2E8F0;margin-bottom:16px">About the
+                    Initiative</div>
+                <h2 style="font-size:2rem;color:var(--navy);font-family:'Sora',sans-serif;margin-bottom:16px">
+                    Transforming Transport<br>in Gujarat</h2>
+                <p style="color:var(--gray);line-height:1.7;margin-bottom:24px;font-size:1rem">DriveEase is a
+                    citizen-first digital initiative by the Transport Department, designed to bring all RTO services
+                    directly to your fingertips. From contactless DL renewals to instant Learner Licence approvals
+                    driven by Aadhaar eKYC, we've eliminated the queues and the paperwork.</p>
+                <a href="about.html" class="btn btn-primary" style="background:#1E293B;border-color:#1E293B">Learn more
+                    about our Vision &rarr;</a>
+            </div>
+            <div style="flex:1;position:relative;display:none;@media(min-width:768px){display:block}">
+                <div
+                    style="aspect-ratio:16/9;background:#E2E8F0;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1)">
+                    <img src="https://images.unsplash.com/photo-1510166089176-b57564d5b92d?q=80&w=1471&auto=format&fit=crop"
+                        style="width:100%;height:100%;object-fit:cover" alt="Digital Transport">
+                </div>
+            </div>
+        </div>
+        <!-- Quick Services -->
+        <div class="section-header">
+            <h2 class="section-title"><span></span>Quick Services</h2>
+            <a href="#" class="see-all">View all services →</a>
+        </div>
+        <div class="services-grid">
+            <a href="learners-licence.html" class="service-card fade-in">
+                <div class="service-icon" style="background:#EFF6FF;">📄</div>
+                <div class="service-label">Apply for Learner Licence</div>
+            </a>
+            <a href="driving-licence.html" class="service-card fade-in">
+                <div class="service-icon" style="background:#F0FDF4;">🪪</div>
+                <div class="service-label">Apply for Driving Licence</div>
+                <span class="service-badge">eKYC</span>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#FFF7ED;">🔄</div>
+                <div class="service-label">DL Renewal</div>
+                <span class="service-badge">eKYC</span>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#FDF4FF;">📋</div>
+                <div class="service-label">Duplicate DL</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#FFF1F2;">📍</div>
+                <div class="service-label">Change of Address</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#ECFDF5;">🌍</div>
+                <div class="service-label">International Driving Permit</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#EFF6FF;">📅</div>
+                <div class="service-label">Book LL / DL Test Slot</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#FFFBEB;">💳</div>
+                <div class="service-label">Fee Payments</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#F0F9FF;">📤</div>
+                <div class="service-label">Upload Documents</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#F5F3FF;">📱</div>
+                <div class="service-label">Mobile Number Update</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#FEF3C7;">⏳</div>
+                <div class="service-label">Complete Pending Application</div>
+            </a>
+            <a href="#" class="service-card fade-in" onclick="openLogin(event)">
+                <div class="service-icon" style="background:#ECFDF5;">🎓</div>
+                <div class="service-label">Online LL Test (STALL)</div>
+            </a>
+        </div>
+
+        <!-- Process Guide + Sidebar -->
+        <div class="two-col">
+            <div class="process-card">
+                <div class="section-header" style="margin-bottom:16px; flex-wrap: wrap; gap: 12px;">
+                    <h2 class="section-title" style="font-size:18px"><span></span>Step-by-Step Guide</h2>
+                    <div style="display:flex;gap:8px">
+                        <button id="listenBtn" class="btn btn-outline"
+                            style="padding:6px 12px;font-size:12px;border-radius:8px" onclick="playAudioGuide()"
+                            title="Listen to these steps">🎧 Listen</button>
+                    </div>
+                </div>
+                <div class="process-tabs">
+                    <button class="ptab active" onclick="showProcess('ll',this)">Learner Licence</button>
+                    <button class="ptab" onclick="showProcess('dl',this)">Driving Licence</button>
+                    <button class="ptab" onclick="showProcess('renew',this)">Renewal</button>
+                    <button class="ptab" onclick="showProcess('intl',this)">International Permit</button>
+                </div>
+
+                <div class="process-content active" id="proc-ll">
+                    <div class="tutorial-banner">
+                        <div class="tutorial-text">
+                            <h3><span style="font-size:20px">📹</span> Visual Guide</h3>
+                            <p>Watch this quick tutorial to understand the entire process of applying for your Learner Licence before you begin.</p>
+                        </div>
+                        <div class="tutorial-video">
+                            <iframe class="tab-video" data-src="https://www.youtube.com/embed/n4_wEQC5l_w" src="https://www.youtube.com/embed/n4_wEQC5l_w" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">1</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Fill Application Form (Form 1 / 1A)</div>
+                                <div class="step-desc">Provide personal details, address, and vehicle class. Ensure
+                                    Aadhaar-linked mobile is active.</div>
+                                <div class="step-docs"><span class="doc-chip">📎 Aadhaar Card</span><span
+                                        class="doc-chip">📎 Age Proof</span><span class="doc-chip">📎 Address
+                                        Proof</span></div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">2</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Upload Photo &amp; Signature</div>
+                                <div class="step-desc">Upload a recent passport-size photo (white background) and
+                                    scanned signature in JPG format.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">3</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Pay Application Fee Online</div>
+                                <div class="step-desc">₹200 for 2-wheeler, ₹300 for LMV. Pay via UPI, Net Banking,
+                                    Debit/Credit Card.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">4</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Book LL Test Slot</div>
+                                <div class="step-desc">Choose a convenient RTO and time slot for your Learner Licence
+                                    computerised test.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">5</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Appear for LL Test &amp; Get Certificate</div>
+                                <div class="step-desc">Pass the online MCQ test at the RTO. LL is valid for 6 months —
+                                    use it to practice driving.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-content" id="proc-dl">
+                    <div class="tutorial-banner">
+                        <div class="tutorial-text">
+                            <h3><span style="font-size:20px">📹</span> Visual Guide</h3>
+                            <p>Watch this step-by-step tutorial on how to smoothly apply for your permanent Driving Licence.</p>
+                        </div>
+                        <div class="tutorial-video">
+                            <iframe class="tab-video" data-src="https://www.youtube.com/embed/P6I3dO7u_p4" src="" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">1</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Prerequisite: Valid Learner Licence (30+ days old)</div>
+                                <div class="step-desc">You must have held your LL for at least 30 days before applying
+                                    for a Driving Licence.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">2</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Fill DL Application Form 9</div>
+                                <div class="step-desc">Enter LL number, personal details, and select vehicle class (e.g.
+                                    LMV, MCWG, HMV).</div>
+                                <div class="step-docs"><span class="doc-chip">📎 LL Certificate</span><span
+                                        class="doc-chip">📎 Medical Certificate</span><span class="doc-chip">📎 Form
+                                        1A</span></div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">3</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Book Driving Test Slot</div>
+                                <div class="step-desc">Select your nearest RTO and preferred time slot for the driving
+                                    skill test.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">4</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Pay Fee &amp; Appear for Test</div>
+                                <div class="step-desc">Fee: ₹200–₹500 depending on vehicle class. Inspector evaluates
+                                    your driving skills.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">5</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">DL Dispatched to Registered Address</div>
+                                <div class="step-desc">Smart card DL is printed and dispatched via Speed Post within
+                                    7–10 working days.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-content" id="proc-renew">
+                    <div class="tutorial-banner">
+                        <div class="tutorial-text">
+                            <h3><span style="font-size:20px">📹</span> Visual Guide</h3>
+                            <p>Need help with DL Renewal? Watch our contactless eKYC renewal walkthrough.</p>
+                        </div>
+                        <div class="tutorial-video">
+                            <iframe class="tab-video" data-src="https://www.youtube.com/embed/n8N33g4h3I0" src="" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">1</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Check DL Expiry Date</div>
+                                <div class="step-desc">Apply for renewal within 1 year before expiry or up to 5 years
+                                    after. Late fees may apply.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">2</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">eKYC Verification (Contactless)</div>
+                                <div class="step-desc">If your Aadhaar details match DL records, renewal is fully
+                                    contactless — no RTO visit needed!</div>
+                                <div class="step-docs"><span class="doc-chip">📎 Aadhaar</span><span class="doc-chip">📎
+                                        Medical Certificate (40+ years)</span></div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">3</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Pay Renewal Fee Online</div>
+                                <div class="step-desc">₹200 per vehicle class. Pay via UPI/Net Banking. Confirm payment
+                                    receipt.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">4</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Renewed DL Delivered to Your Door</div>
+                                <div class="step-desc">Smart card dispatched in 7–10 days. Track via application status
+                                    page.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-content" id="proc-intl">
+                    <div class="tutorial-banner">
+                        <div class="tutorial-text">
+                            <h3><span style="font-size:20px">📹</span> Visual Guide</h3>
+                            <p>Planning to drive abroad? Watch our guide on securing an International Driving Permit safely and easily.</p>
+                        </div>
+                        <div class="tutorial-video">
+                            <iframe class="tab-video" data-src="https://www.youtube.com/embed/hL_66-GZIf8" src="" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">1</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Eligibility Check</div>
+                                <div class="step-desc">Must hold a valid Indian Driving Licence. IDP is valid for 1 year
+                                    or until DL expiry.</div>
+                                <div class="step-docs"><span class="doc-chip">📎 Valid DL</span><span
+                                        class="doc-chip">📎 Passport</span><span class="doc-chip">📎 Visa</span></div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">2</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Fill Form 4A Online</div>
+                                <div class="step-desc">Submit details of country of travel and travel dates. Upload
+                                    passport and travel documents.</div>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num-wrap">
+                                <div class="step-num">3</div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-title">Visit RTO Once for Collection</div>
+                                <div class="step-desc">IDP is issued on the same day at the RTO after verification.
+                                    Bring all originals.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="info-card">
+                    <h4>
+                        <div class="dot" style="background:#10B981"></div> Today's Slot Availability
+                    </h4>
+                    <div class="slot-list">
+                        <div class="slot-item">
+                            <div>
+                                <div class="slot-left">Ahmedabad RTO (GJ-01)</div>
+                                <div class="slot-meta">LL Test • Today 10 AM – 4 PM</div>
+                            </div><span class="slot-badge available">Available</span>
+                        </div>
+                        <div class="slot-item">
+                            <div>
+                                <div class="slot-left">Surat RTO (GJ-05)</div>
+                                <div class="slot-meta">DL Test • Today 9 AM – 1 PM</div>
+                            </div><span class="slot-badge limited">3 Slots Left</span>
+                        </div>
+                        <div class="slot-item">
+                            <div>
+                                <div class="slot-left">Vadodara RTO (GJ-06)</div>
+                                <div class="slot-meta">DL Services • Today</div>
+                            </div><span class="slot-badge full">Fully Booked</span>
+                        </div>
+                    </div>
+                    <a href="appointment-enhanced.html" class="btn btn-primary"
+                        style="margin-top:14px;width:100%;justify-content:center;font-size:13px">Book a Slot →</a>
+                </div>
+                <div class="info-card">
+                    <h4>
+                        <div class="dot" style="background:#F59E0B"></div> Latest Notices
+                    </h4>
+                    <div class="notice-list">
+                        <div class="notice-item">
+                            <div class="notice-tag">📢 New</div>DL Renewal now fully contactless via eKYC for all
+                            Gujarat residents.
+                        </div>
+                        <div class="notice-item">
+                            <div class="notice-tag">🔔 Update</div>Driving School Licence (DSL) enrollments open for
+                            March batch.
+                        </div>
+                        <div class="notice-item">
+                            <div class="notice-tag">⚠️ Advisory</div>System maintenance scheduled: 2–4 AM, 11 March
+                            2026.
+                        </div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h4>
+                        <div class="dot"></div> Download Forms
+                    </h4>
+                    <div style="display:flex;flex-direction:column;gap:8px">
+                        <a href="#"
+                            style="font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:6px">📄
+                            Form 1 – LL Application</a>
+                        <a href="#"
+                            style="font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:6px">📄
+                            Form 4 – DL Application</a>
+                        <a href="#"
+                            style="font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:6px">📄
+                            Form 1A – Medical Certificate</a>
+                        <a href="#"
+                            style="font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:6px">📄
+                            Form 4A – IDP Application</a>
+                        <a href="#"
+                            style="font-size:13px;color:var(--blue);text-decoration:none;display:flex;align-items:center;gap:6px">📄
+                            Fee Structure Chart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- eKYC Contactless Services -->
+        <div class="ekyc-section">
+            <div class="section-header">
+                <h2 class="section-title"><span></span>eKYC Contactless Services</h2>
+                <span style="font-size:13px;color:var(--gray)">No RTO visit required — Aadhaar verified</span>
+            </div>
+            <div class="ekyc-grid">
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">📋</div>
+                    <div class="ekyc-label">Issue of Duplicate LL</div><span class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">📍</div>
+                    <div class="ekyc-label">Change of Address in LL</div><span class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">📱</div>
+                    <div class="ekyc-label">Update Mobile in LL / DL / CL</div><span
+                        class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">🔄</div>
+                    <div class="ekyc-label">Renewal of DL</div><span class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">📋</div>
+                    <div class="ekyc-label">Issue of Duplicate DL</div><span class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">🔁</div>
+                    <div class="ekyc-label">Replacement of DL</div><span class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">⚠️</div>
+                    <div class="ekyc-label">Endorsement – Hazardous Material</div><span
+                        class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">✍️</div>
+                    <div class="ekyc-label">Change of Name in DL</div><span class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">🌍</div>
+                    <div class="ekyc-label">Issue International Driving Permit</div><span
+                        class="ekyc-tag tag-ekyc">eKYC</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">📄</div>
+                    <div class="ekyc-label">Issue of Learner's Licence</div><span
+                        class="ekyc-tag tag-faceless">Faceless</span>
+                </a>
+                <a href="#" class="ekyc-card" onclick="openLogin(event)">
+                    <div class="ekyc-icon">🪖</div>
+                    <div class="ekyc-label">LL and AEDL</div><span class="ekyc-tag tag-faceless">Faceless</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Track Application -->
+        <div class="track-section" id="track-section">
+            <div class="track-inner">
+                <h2>🔍 Track Your Application</h2>
+                <p>Enter your application number and date of birth to check real-time status instantly.</p>
+                <div class="track-form">
+                    <input class="track-input" id="trackAppNum" placeholder="Application Number (e.g. GJ-12345)" />
+                    <input class="track-input" id="trackDob" placeholder="Date of Birth (DD-MM-YYYY)" />
+                    <button class="btn btn-primary btn-hero" onclick="trackApplication()">Track Now →</button>
+                </div>
+                <div class="track-result" id="track-result">
+                    <div class="track-result-row"><span class="track-result-label">Application Number</span><span
+                            class="track-result-val" id="tr-num">–</span></div>
+                    <div class="track-result-row"><span class="track-result-label">Applicant Name</span><span
+                            class="track-result-val">As per Aadhaar</span></div>
+                    <div class="track-result-row"><span class="track-result-label">Status</span><span
+                            class="track-result-val" style="color:#10B981">✅ Documents Verified</span></div>
+                    <div class="track-result-row"><span class="track-result-label">Next Step</span><span
+                            class="track-result-val">DL Test Slot Pending</span></div>
+                    <div class="track-result-row"><span class="track-result-label">Estimated Completion</span><span
+                            class="track-result-val">5–7 Working Days</span></div>
+                </div>
+                <p style="font-size:12px;color:var(--gray);margin-top:12px">📲 Also track via <strong>DriveEase
+                        App</strong> — available on Google Play &amp; App Store</p>
+            </div>
+        </div>
+
+        <!-- Help & Support -->
+        <div class="section-header">
+            <h2 class="section-title"><span></span>Help &amp; Support</h2>
+        </div>
+        <div class="help-section">
+            <a href="#" class="help-card">
+                <div class="help-icon">📖</div>
+                <div class="help-title">User Manuals</div>
+                <div class="help-desc">Step-by-step PDF guides for every service available on the portal.</div>
+            </a>
+            <a href="#" class="help-card">
+                <div class="help-icon">🎥</div>
+                <div class="help-title">Video Tutorials</div>
+                <div class="help-desc">Watch how-to videos in Hindi, Gujarati &amp; English for common services.</div>
+            </a>
+            <a href="#" class="help-card">
+                <div class="help-icon">❓</div>
+                <div class="help-title">FAQs</div>
+                <div class="help-desc">Answers to 50+ frequently asked questions about licences and fees.</div>
+            </a>
+            <a href="tel:01204925505" class="help-card">
+                <div class="help-icon">📞</div>
+                <div class="help-title">Helpline: 0120-4925505</div>
+                <div class="help-desc">Available Mon–Sat, 8 AM to 8 PM. Toll-free for transport queries.</div>
+            </a>
+            <a href="#" class="help-card">
+                <div class="help-icon">✉️</div>
+                <div class="help-title">Feedback &amp; Grievance</div>
+                <div class="help-desc">Submit complaints or suggestions. Response within 7 working days.</div>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                    <div class="brand-emblem" style="width:40px;height:40px;font-size:18px">D</div>
+                    <div class="brand-name" style="color:white">Drive<span style="color:var(--teal)">Ease</span></div>
+                </div>
+                <p>Official portal of the Ministry of Road Transport &amp; Highways, Government of India. Serving
+                    citizens with transparent, digital-first transport services.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Licence Services</h5>
+                <a href="#">Apply Learner Licence</a>
+                <a href="#">Apply Driving Licence</a>
+                <a href="#">DL Renewal</a>
+                <a href="#">Duplicate DL</a>
+                <a href="#">International Permit</a>
+            </div>
+            <div class="footer-col">
+                <h5>Quick Links</h5>
+                <a href="#">Application Status</a>
+                <a href="#">Fee Payments</a>
+                <a href="#">Book Appointment</a>
+                <a href="#">Upload Document</a>
+                <a href="#">Find Doctor</a>
+            </div>
+            <div class="footer-col">
+                <h5>Resources</h5>
+                <a href="about.html">About DriveEase</a>
+                <a href="#">Acts &amp; Rules</a>
+                <a href="#">Road Safety</a>
+                <a href="#">User Manuals</a>
+                <a href="#">Parivahan Portal</a>
+                <a href="#">Organ Donor Pledge</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 DriveEase · Ministry of Road Transport &amp; Highways, Govt. of India. All rights reserved.
+            </div>
+            <div class="footer-logos">
+                <div class="footer-logo-box">NIC</div>
+                <div class="footer-logo-box">Digital India</div>
+                <div class="footer-logo-box">G20 India</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ACCESSIBILITY TOOLBAR -->
+    <div class="a11y-bar">
+        <div class="a11y-label">Font</div>
+        <button class="a11y-btn a11y-font-sm" id="btn-font-sm" onclick="setFontSize('sm')"
+            title="Small Font (A-)">A-</button>
+        <button class="a11y-btn active" id="btn-font-md" onclick="setFontSize('md')" title="Normal Font (A)">A</button>
+        <button class="a11y-btn a11y-font-lg" id="btn-font-lg" onclick="setFontSize('lg')"
+            title="Large Font (A+)">A+</button>
+        <div class="a11y-divider"></div>
+        <button class="a11y-btn"
+            onclick="alert('Screen reader mode: Use Tab key to navigate interactive elements. All buttons and links are labelled.')"
+            title="Screen Reader">♿</button>
+    </div>
+
+    <!-- CHATBOT -->
+    <button class="chatbot-btn" onclick="toggleChat()" title="DriveEase Virtual Assistant">
+        <img src="chatbot-logo.svg" alt="DEVA Logo" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+        <span class="chatbot-badge"></span>
+    </button>
+
+
+
+
+
+
+    <script>
+        // ─── NAV DROPDOWNS ───
+        function toggleDropdown(btn) {
+            const dd = btn.parentElement.querySelector('.dropdown');
+            const isOpen = dd.classList.contains('open');
+            document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('open'));
+            if (!isOpen) { dd.classList.add('open'); btn.classList.add('open'); }
+        }
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.nav-item')) {
+                document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('open'));
+            }
+        });
+
+        // ─── USER SIDEBAR TOGGLE ───
+        function toggleUserSidebar() {
+            const sidebar = document.getElementById('userSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar && overlay) {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+        }
+
+        // ─── MOBILE NAV ───
+        function toggleMobileNav() {
+            document.getElementById('main-nav').classList.toggle('open');
+        }
+
+        // ─── HERO TABS ───
+        function switchTab(btn, id) {
+            document.querySelectorAll('.status-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            ['app', 'dl', 'slot'].forEach(x => {
+                document.getElementById('tab-' + x).style.display = x === id ? 'block' : 'none';
+            });
+        }
+
+        // ─── QUICK CHECK STATUS ───
+        function checkStatus(type) {
+            let input, resId;
+            if (type === 'app') { input = document.getElementById('appNum').value; resId = 'res-app'; document.getElementById('res-app-num').textContent = input || 'GJ-12345'; }
+            else if (type === 'dl') { input = document.getElementById('dlNum').value; resId = 'res-dl'; document.getElementById('res-dl-num').textContent = input || 'GJ0120XXXXXXX'; }
+            else { input = document.getElementById('slotNum').value; resId = 'res-slot'; }
+            if (!input.trim()) { alert('Please enter a valid number first.'); return; }
+            const el = document.getElementById(resId);
+            el.classList.remove('show');
+            setTimeout(() => el.classList.add('show'), 100);
+        }
+
+        // ─── PROCESS TABS ───
+        function showProcess(id, btn) {
+            document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Stop videos in other tabs
+            document.querySelectorAll('.process-content').forEach(c => {
+                c.classList.remove('active');
+                const iframe = c.querySelector('.tab-video');
+                if(iframe) iframe.src = ''; 
+            });
+            
+            const activeContent = document.getElementById('proc-' + id);
+            activeContent.classList.add('active');
+            
+            // Start video in active tab
+            const activeIframe = activeContent.querySelector('.tab-video');
+            if(activeIframe) activeIframe.src = activeIframe.getAttribute('data-src');
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const listenBtn = document.getElementById('listenBtn');
+                if (listenBtn) {
+                    listenBtn.innerHTML = "🎧 Listen";
+                    listenBtn.setAttribute('data-playing', 'false');
+                }
+            }
+        }
+
+        // ─── TRACK APPLICATION ───
+        async function trackApplication() {
+            const num = document.getElementById('trackAppNum').value.trim();
+            if (!num) { alert('Please enter your application number.'); return; }
+            
+            try {
+                const response = await fetch(`http://localhost:3000/api/track/${num}`);
+                const data = await response.json();
+                
+                if (response.ok && data.tracking) {
+                    document.getElementById('tr-num').textContent = num;
+                    document.getElementById('tr-status').textContent = data.tracking.label;
+                    document.getElementById('tr-status').style.color = data.tracking.color;
+                    
+                    const res = document.getElementById('track-result');
+                    res.classList.remove('show');
+                    setTimeout(() => res.classList.add('show'), 100);
+                } else {
+                    alert(data.error || 'Application not found. Please check your tracking number.');
+                }
+            } catch (err) {
+                console.warn('Backend unavailable, using demo tracking:', err.message);
+                document.getElementById('tr-num').textContent = num;
+                document.getElementById('tr-status').textContent = 'Processing';
+                const res = document.getElementById('track-result');
+                res.classList.remove('show');
+                setTimeout(() => res.classList.add('show'), 100);
+            }
+        }
+        function scrollToTrack(e) {
+            if (e) e.preventDefault();
+            document.getElementById('track-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ─── FONT SIZE (A- / A / A+) ───
+        const fontSizes = { sm: '14px', md: '16px', lg: '19px' };
+        function setFontSize(size) {
+            document.documentElement.style.fontSize = fontSizes[size];
+            ['sm', 'md', 'lg'].forEach(s => document.getElementById('btn-font-' + s).classList.remove('active'));
+            document.getElementById('btn-font-' + size).classList.add('active');
+        }
+
+
+
+        // ─── LANGUAGE ───
+        function changeLang(val) {
+            const msgs = { gu: 'ગુજરાતી ભાષામાં આવકાર! (Full multilingual support coming soon)', hi: 'हिंदी में आपका स्वागत है! (पूर्ण बहुभाषी समर्थन जल्द आ रहा है)' };
+            if (msgs[val]) alert(msgs[val]);
+        }
+
+        // ─── LOGIN STATE CHECK ───
+        function checkLoginState() {
+            const isLoggedIn = localStorage.getItem('driveease_logged_in') === 'true';
+            const userName = localStorage.getItem('driveease_user_name') || 'User';
+            if (isLoggedIn) {
+                if (document.getElementById('btn-login-main')) document.getElementById('btn-login-main').style.display = 'none';
+                if (document.getElementById('user-profile')) document.getElementById('user-profile').style.display = 'block';
+                // Update name dynamically
+                const nameParts = userName.trim().split(' ');
+                const initials = nameParts.length >= 2 ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase() : userName.slice(0, 2).toUpperCase();
+                const avatarEl = document.querySelector('.profile-btn .avatar');
+                const nameEl = document.querySelector('.profile-btn .user-name');
+                const sidebarAvatarEl = document.getElementById('sidebar-avatar');
+                const sidebarNameEl = document.getElementById('sidebar-name');
+
+                if (avatarEl) avatarEl.textContent = initials;
+                if (nameEl) nameEl.textContent = userName;
+                if (sidebarAvatarEl) sidebarAvatarEl.textContent = initials;
+                if (sidebarNameEl) sidebarNameEl.textContent = userName;
+            } else {
+                if (document.getElementById('btn-login-main')) document.getElementById('btn-login-main').style.display = 'inline-flex';
+                if (document.getElementById('user-profile')) document.getElementById('user-profile').style.display = 'none';
+            }
+        }
+        window.addEventListener('load', checkLoginState);
+
+        function openLogin(e) {
+            if (e) e.preventDefault();
+            window.location.href = 'login.html';
+        }
+
+        // ─── LOGOUT ───
+        function doLogout() {
+            localStorage.removeItem('driveease_logged_in');
+            localStorage.removeItem('driveease_user_name');
+            alert('You have been securely logged out.');
+            window.location.href = 'index.html';
+        }
+
+        // ─── FRAUD MODAL ───
+        function closeFraud() { document.getElementById('fraudModal').classList.remove('open'); }
+
+        // ─── CHATBOT ─── (handled by chatbot-ui.js)
+
+        // ─── PAGE LOAD ───
+        window.addEventListener('load', function () {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; } });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.service-card,.ekyc-card,.help-card').forEach((el, i) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease ' + (i * 0.05) + 's, transform 0.5s ease ' + (i * 0.05) + 's';
+                obs.observe(el);
+            });
+        });
+
+        // ─── STEP PROGRESS TRACKER ───
+        document.addEventListener('DOMContentLoaded', () => {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                const procId = step.closest('.process-content').id;
+                const stepKey = 'driveease_step_' + procId + '_' + index;
+
+                if (localStorage.getItem(stepKey) === 'true') {
+                    step.classList.add('completed');
+                }
+
+                step.onclick = function () {
+                    this.classList.toggle('completed');
+                    localStorage.setItem(stepKey, this.classList.contains('completed'));
+                };
+                step.title = "Click to mark as complete";
+            });
+        });
+
+        // ─── TEXT TO SPEECH (AUDIO GUIDE) ───
+        function playAudioGuide() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+
+                const listenBtn = document.getElementById('listenBtn');
+                if (listenBtn.getAttribute('data-playing') === 'true') {
+                    listenBtn.innerHTML = "🎧 Listen";
+                    listenBtn.setAttribute('data-playing', 'false');
+                    return;
+                }
+
+                const activeContent = document.querySelector('.process-content.active');
+                if (!activeContent) return;
+
+                let textToRead = "Here are the steps. ";
+                const steps = activeContent.querySelectorAll('.step');
+                steps.forEach((step, index) => {
+                    const title = step.querySelector('.step-title').textContent;
+                    const desc = step.querySelector('.step-desc').textContent;
+                    textToRead += `Step ${index + 1}: ${title}. ${desc}. `;
+                });
+
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'en-IN';
+
+                utterance.onend = () => {
+                    listenBtn.innerHTML = "🎧 Listen";
+                    listenBtn.setAttribute('data-playing', 'false');
+                };
+
+                listenBtn.innerHTML = "🔊 Stop";
+                listenBtn.setAttribute('data-playing', 'true');
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Text-to-speech is not supported in this browser.');
+            }
+        }
+    </script>
+
+    <!-- CHATBOT ENGINE -->
+    <script src="chatbot-knowledge.js"></script>
+    <script src="chatbot-nlp.js"></script>
+    <script src="chatbot-ui.js"></script>
+</body>
+
+</html>

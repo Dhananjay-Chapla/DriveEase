@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveEase - National Transport Portal</title>
+    <meta name="description"
+        content="DriveEase – India's smart digital driving licence portal. Apply, track, and manage transport services online.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --blue: #1A4FD6;
+            --blue-dark: #0F3294;
+            --navy: #0D1B3E;
+            --teal: #10B981;
+            --orange: #F59E0B;
+            --white: #FFFFFF;
+            --light: #F8FAFC;
+            --gray: #64748B;
+            --gray-light: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--navy);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: radial-gradient(circle at top right, rgba(26, 79, 214, 0.05), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent 40%);
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        /* ─── HEADER (sticky) ─── */
+        header {
+            background: var(--white);
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: box-shadow 0.3s;
+        }
+
+        header.scrolled {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-emblem {
+            background: linear-gradient(135deg, var(--navy), var(--blue));
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Sora', sans-serif;
+            box-shadow: 0 4px 12px rgba(26, 79, 214, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .brand-emblem:hover {
+            transform: scale(1.08) rotate(-3deg);
+            box-shadow: 0 6px 20px rgba(26, 79, 214, 0.4);
+        }
+
+        .brand-name {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--navy);
+            line-height: 1.1;
+        }
+
+        .brand-name span {
+            color: var(--blue);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-nav a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .header-nav a:hover {
+            background: #EFF6FF;
+            color: var(--blue);
+        }
+
+        .emblem-gov {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray);
+            text-align: right;
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .hero-graphics {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .central-box {
+            background: var(--white);
+            max-width: 540px;
+            width: 100%;
+            border-radius: 24px;
+            padding: 48px 40px;
+            box-shadow: 0 20px 60px rgba(13, 27, 62, 0.08);
+            border: 1px solid var(--gray-light);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .gov-tag {
+            display: inline-block;
+            background: #EFF6FF;
+            color: var(--blue);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .central-box h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.25rem;
+            color: var(--navy);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .central-box p {
+            color: var(--gray);
+            font-size: 1.0625rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            margin-bottom: 8px;
+            color: var(--navy);
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1.0625rem;
+            color: var(--navy);
+            appearance: none;
+            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 20px center;
+            background-size: 20px;
+            background-color: var(--white);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 4px rgba(26, 79, 214, 0.1);
+        }
+
+        .btn-proceed {
+            background: linear-gradient(135deg, var(--blue), #2563EB);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(26, 79, 214, 0.3);
+        }
+
+        .btn-proceed:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px rgba(26, 79, 214, 0.45);
+            background: linear-gradient(135deg, #2563EB, var(--blue));
+        }
+
+        .btn-proceed:disabled {
+            background: #CBD5E1;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ─── INFO SECTION ─── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1000px;
+            margin: 60px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--gray-light);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px) rotateX(2deg);
+            box-shadow: 0 12px 32px rgba(13, 27, 62, 0.10);
+            border-color: var(--blue);
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .info-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .info-desc {
+            font-size: 0.875rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ═══════════════════════════════════════════
+           NEW SECTIONS
+           ═══════════════════════════════════════════ */
+
+        .section-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 32px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #EFF6FF;
+            color: var(--blue);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            border: 1.5px solid var(--gray-light);
+        }
+
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .section-desc {
+            color: var(--gray);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .video-section {
+            background: var(--white);
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .video-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .video-placeholder {
+            background: linear-gradient(135deg, var(--navy), #1A3A8F);
+            border-radius: 20px;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 12px 40px rgba(13, 27, 62, 0.2);
+        }
+
+        .video-placeholder::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(59, 130, 246, 0.15), transparent 60%);
+        }
+
+        .play-btn {
+            width: 72px;
+            height: 72px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            animation: playPulse 2s ease-in-out infinite;
+            transition: transform 0.3s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .play-btn svg {
+            margin-left: 4px;
+        }
+
+        @keyframes playPulse {
+
+            0%,
+            100% {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 16px rgba(255, 255, 255, 0);
+            }
+        }
+
+        .steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 20px;
+            background: var(--light);
+            border-radius: 16px;
+            border: 1.5px solid var(--gray-light);
+            transition: all 0.3s;
+        }
+
+        .step-item:hover {
+            transform: translateX(8px);
+            border-color: var(--blue);
+            box-shadow: 0 4px 16px rgba(26, 79, 214, 0.1);
+        }
+
+        .step-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .step-text h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .step-text p {
+            color: var(--gray);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* ─── UX HIGHLIGHTS ─── */
+        .ux-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .ux-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 32px 20px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            border: 1.5px solid var(--gray-light);
+            transition: all 0.3s;
+        }
+
+        .ux-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 36px rgba(26, 79, 214, 0.12);
+            border-color: var(--blue);
+        }
+
+        .ux-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 16px;
+        }
+
+        .ux-card h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .ux-card p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ─── USER JOURNEY ─── */
+        .journey-section {
+            background: linear-gradient(135deg, var(--navy) 0%, #1A3A8F 100%);
+            color: white;
+        }
+
+        .journey-section .section-title {
+            color: white;
+        }
+
+        .journey-section .section-desc {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .journey-track {
+            display: flex;
+            gap: 0;
+            position: relative;
+            justify-content: space-between;
+        }
+
+        .journey-track::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 36px;
+            right: 36px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: 0;
+        }
+
+        .journey-step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            max-width: 180px;
+        }
+
+        .j-circle {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 14px;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .journey-step:hover .j-circle {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--teal);
+            transform: scale(1.1);
+        }
+
+        .journey-step h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .journey-step p {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.4;
+        }
+
+        /* ─── STATISTICS ─── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 36px 24px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            border: 1.5px solid var(--gray-light);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 36px rgba(26, 79, 214, 0.12);
+            border-color: var(--blue);
+        }
+
+        .stat-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--blue);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .stat-sublabel {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* ─── TESTIMONIALS ─── */
+        .testimonial-section {
+            background: var(--white);
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 32px 24px;
+            border: 1.5px solid var(--gray-light);
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 36px rgba(13, 27, 62, 0.1);
+            border-color: var(--blue);
+        }
+
+        .t-stars {
+            color: var(--orange);
+            font-size: 1rem;
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+        }
+
+        .t-quote {
+            font-size: 0.95rem;
+            color: var(--navy);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .t-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .t-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .t-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--navy);
+        }
+
+        .t-role {
+            font-size: 0.78rem;
+            color: var(--gray);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 32px;
+        }
+
+        .footer-brand p {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 12px;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        .help-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 32px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .help-icon {
+            font-size: 2rem;
+            background: rgba(16, 185, 129, 0.2);
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .help-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .help-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .help-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Sora', sans-serif;
+            color: var(--teal);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--orange);
+        }
+
+        /* ─── SCROLL REVEAL ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+
+            .info-grid,
+            .stats-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ux-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .video-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .journey-track {
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+            }
+
+            .journey-track::before {
+                display: none;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 20px;
+            }
+
+            .header-nav {
+                display: none;
+            }
+
+            .emblem-gov {
+                text-align: center;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .help-box {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .ux-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-wrap {
+                padding: 48px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="brand">
+            <div class="brand-emblem">D</div>
+            <div class="brand-text">
+                <div class="brand-name">Drive<span>Ease</span></div>
+            </div>
+        </div>
+        <div class="header-nav">
+            <a href="portal.html">Portal</a>
+            <a href="about.html">About</a>
+            <a href="product.html">Product</a>
+        </div>
+        <div class="emblem-gov">
+            <div>🏛️</div>
+            <div>
+                <div>Ministry of Road Transport & Highways</div>
+                <div style="font-size:0.75rem;font-weight:400;color:var(--gray-light)">Government of India</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-graphics">
+            <svg viewBox="0 0 1000 1000"
+                style="position:absolute;top:-10%;left:-10%;width:800px;opacity:0.03;transform:rotate(-15deg);">
+                <path d="M100 0 A 200 200 0 0 1 300 200" fill="none" stroke="#1A4FD6" stroke-width="40" />
+                <path d="M200 0 A 200 200 0 0 1 400 200" fill="none" stroke="#1A4FD6" stroke-width="40" />
+                <circle cx="600" cy="400" r="300" fill="none" stroke="#10B981" stroke-width="2" />
+                <circle cx="600" cy="400" r="340" fill="none" stroke="#10B981" stroke-width="2" />
+            </svg>
+        </div>
+
+        <div class="central-box">
+            <div class="gov-tag">National Transport Portal</div>
+            <h1>Welcome to DriveEase</h1>
+            <p>Access fast, contactless, and digital transport services. Please select your state to be redirected to
+                your regional portal.</p>
+
+            <div class="form-group">
+                <label for="state-select">Select State / Union Territory</label>
+                <select id="state-select" class="custom-select" onchange="checkState()">
+                    <option value="" disabled selected>-- Select your State --</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="West Bengal">West Bengal</option>
+                    <option value="A&N Islands">Andaman and Nicobar Islands</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="DNH & DD">Dadra and Nagar Haveli and Daman and Diu</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Jammu & Kashmir">Jammu and Kashmir</option>
+                    <option value="Ladakh">Ladakh</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Puducherry">Puducherry</option>
+                </select>
+            </div>
+
+            <button id="proceed-btn" class="btn-proceed" disabled onclick="proceedToState()">
+                Proceed
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card" style="animation: scaleIn 0.5s ease 0.1s both">
+                <div class="info-icon">⚡</div>
+                <h3 class="info-title">eKYC Faceless</h3>
+                <p class="info-desc">Avail completely contactless services verified directly via Aadhaar authentication
+                    directly from home.</p>
+            </div>
+            <div class="info-card" style="animation: scaleIn 0.5s ease 0.25s both">
+                <div class="info-icon">🪪</div>
+                <h3 class="info-title">Unified Platform</h3>
+                <p class="info-desc">Apply for Learner's Licence, Driving Licence, Renewal, and Duplicate DL all from a
+                    single standardized interface.</p>
+            </div>
+            <div class="info-card" style="animation: scaleIn 0.5s ease 0.4s both">
+                <div class="info-icon">🔒</div>
+                <h3 class="info-title">Highly Secure</h3>
+                <p class="info-desc">Backed by encrypted government servers, your personal data and uploaded documents
+                    are handled with maximum security.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ═══════ HOW DRIVEEASE WORKS (Video Section) ═══════ -->
+    <section class="video-section" id="how-it-works">
+        <div class="section-wrap">
+            <div class="reveal">
+                <div class="section-label">🎥 How It Works</div>
+                <h2 class="section-title">How DriveEase Works</h2>
+                <p class="section-desc">A simple 4-step process to get your driving licence — entirely online, no RTO
+                    queues.</p>
+            </div>
+            <div class="video-layout reveal">
+                <div class="video-placeholder"
+                    onclick="this.innerHTML='<iframe src=\'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1\' frameborder=0 allow=autoplay style=\'width:100%;height:100%;border-radius:20px\' allowfullscreen></iframe>'">
+                    <div class="play-btn">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--blue)">
+                            <polygon points="5,3 19,12 5,21" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="steps-list">
+                    <div class="step-item">
+                        <div class="step-num" style="background:linear-gradient(135deg,var(--blue),#2563EB)">01</div>
+                        <div class="step-text">
+                            <h4>Apply Online</h4>
+                            <p>Fill out the application form for your licence type from anywhere.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num" style="background:linear-gradient(135deg,#0EA5E9,#06B6D4)">02</div>
+                        <div class="step-text">
+                            <h4>Upload Documents</h4>
+                            <p>Upload Aadhaar, address proof, and photo securely via the portal.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num" style="background:linear-gradient(135deg,var(--teal),#059669)">03</div>
+                        <div class="step-text">
+                            <h4>Book Appointment</h4>
+                            <p>Choose your RTO office, pick a date, and confirm your slot.</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-num" style="background:linear-gradient(135deg,var(--orange),#D97706)">04</div>
+                        <div class="step-text">
+                            <h4>Get Your Licence</h4>
+                            <p>Complete your test and receive your licence digitally.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ UX IMPROVEMENT HIGHLIGHTS ═══════ -->
+    <section id="ux-highlights">
+        <div class="section-wrap">
+            <div class="reveal">
+                <div class="section-label">✨ Better Experience</div>
+                <h2 class="section-title">UX Improvement Highlights</h2>
+                <p class="section-desc">How DriveEase improves over traditional RTO portals with modern UX principles.
+                </p>
+            </div>
+            <div class="ux-grid reveal">
+                <div class="ux-card">
+                    <div class="ux-icon" style="background:#EFF6FF">🚀</div>
+                    <h4>Faster Navigation</h4>
+                    <p>Reach any service within 2 clicks. Sticky navbar and card-based layout keep things accessible.
+                    </p>
+                </div>
+                <div class="ux-card">
+                    <div class="ux-icon" style="background:#ECFDF5">📋</div>
+                    <h4>Reduced Paperwork</h4>
+                    <p>Digital forms with auto-fill and validation cut paperwork by 60%. Upload docs directly.</p>
+                </div>
+                <div class="ux-card">
+                    <div class="ux-icon" style="background:#FEF3C7">📱</div>
+                    <h4>Mobile-Friendly UI</h4>
+                    <p>Fully responsive layouts with touch-friendly 44px+ tap targets. Works on any device.</p>
+                </div>
+                <div class="ux-card">
+                    <div class="ux-icon" style="background:#EDE9FE">🎯</div>
+                    <h4>Clear Service Access</h4>
+                    <p>Each service has its own card with icon, label, and one-tap access. No confusion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ USER JOURNEY FLOW ═══════ -->
+    <section class="journey-section" id="user-journey">
+        <div class="section-wrap">
+            <div class="reveal">
+                <div class="section-label"
+                    style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:white;">🗺️ User
+                    Journey</div>
+                <h2 class="section-title">Your Path to a Driving Licence</h2>
+                <p class="section-desc">From registration to approval — a seamless 5-step journey.</p>
+            </div>
+            <div class="journey-track reveal">
+                <div class="journey-step">
+                    <div class="j-circle">👤</div>
+                    <h4>Step 1</h4>
+                    <p>Register / Login to the portal</p>
+                </div>
+                <div class="journey-step">
+                    <div class="j-circle">📝</div>
+                    <h4>Step 2</h4>
+                    <p>Apply for your licence type</p>
+                </div>
+                <div class="journey-step">
+                    <div class="j-circle">📎</div>
+                    <h4>Step 3</h4>
+                    <p>Upload required documents</p>
+                </div>
+                <div class="journey-step">
+                    <div class="j-circle">📅</div>
+                    <h4>Step 4</h4>
+                    <p>Book your RTO appointment</p>
+                </div>
+                <div class="journey-step">
+                    <div class="j-circle">✅</div>
+                    <h4>Step 5</h4>
+                    <p>Get approval & licence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ STATISTICS ═══════ -->
+    <section id="statistics">
+        <div class="section-wrap">
+            <div class="reveal">
+                <div class="section-label">📊 Impact</div>
+                <h2 class="section-title">DriveEase by the Numbers</h2>
+                <p class="section-desc">Key metrics showcasing the digital transformation impact.</p>
+            </div>
+            <div class="stats-grid reveal">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="80">0%</div>
+                    <div class="stat-label">Faster Application Process</div>
+                    <div class="stat-sublabel">Compared to traditional RTO visits</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="60">0%</div>
+                    <div class="stat-label">Reduced Paperwork</div>
+                    <div class="stat-sublabel">Digital forms replace physical documents</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="100">0%</div>
+                    <div class="stat-label">Digital Workflow</div>
+                    <div class="stat-sublabel">End-to-end online process</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ TESTIMONIALS ═══════ -->
+    <section class="testimonial-section" id="testimonials">
+        <div class="section-wrap">
+            <div class="reveal">
+                <div class="section-label">💬 Testimonials</div>
+                <h2 class="section-title">What Users Are Saying</h2>
+                <p class="section-desc">Real feedback from citizens who used DriveEase for their licence applications.
+                </p>
+            </div>
+            <div class="testimonials-grid reveal">
+                <div class="testimonial-card">
+                    <div class="t-stars">★★★★★</div>
+                    <p class="t-quote">"I got my learner licence without stepping into the RTO office even once. The
+                        entire process — from applying to booking the test slot — was smooth and fast."</p>
+                    <div class="t-author">
+                        <div class="t-avatar" style="background:#EFF6FF">👨</div>
+                        <div>
+                            <div class="t-name">Rahul Sharma</div>
+                            <div class="t-role">Student, Delhi</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="t-stars">★★★★★</div>
+                    <p class="t-quote">"The old Parivahan site was so confusing. DriveEase is clean, fast, and I could
+                        track my application status in real time. Highly recommended!"</p>
+                    <div class="t-author">
+                        <div class="t-avatar" style="background:#ECFDF5">👩</div>
+                        <div>
+                            <div class="t-name">Priya Patel</div>
+                            <div class="t-role">IT Professional, Mumbai</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="t-stars">★★★★☆</div>
+                    <p class="t-quote">"Booking an RTO appointment used to take hours of calling. With DriveEase, I
+                        picked my slot in under a minute. The card-based design is very intuitive."</p>
+                    <div class="t-author">
+                        <div class="t-avatar" style="background:#FEF3C7">👨‍💼</div>
+                        <div>
+                            <div class="t-name">Arjun Reddy</div>
+                            <div class="t-role">Business Owner, Hyderabad</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="brand" style="margin-bottom:12px;display:flex;align-items:center;gap:12px">
+                    <div class="brand-emblem"
+                        style="width:36px;height:36px;font-size:18px;background:linear-gradient(135deg, var(--navy), var(--blue))">
+                        D</div>
+                    <div class="brand-name" style="color:white">Drive<span style="color:var(--blue)">Ease</span></div>
+                </div>
+                <p>Official gateway of the Ministry of Road Transport &amp; Highways, Government of India. Transforming
+                    transport services via digital-first governance.</p>
+            </div>
+
+            <div class="help-box">
+                <div class="help-icon">📞</div>
+                <div class="help-text">
+                    <div class="help-label">National Helpdesk (Toll Free)</div>
+                    <div class="help-number">1800 - 11 - 2222</div>
+                    <div style="font-size:0.75rem;color:rgba(255,255,255,0.5)">Timing: 8:00 AM - 10:00 PM</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2026 DriveEase · Ministry of Road Transport &amp; Highways, Govt. of India. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="product.html">Product</a>
+                <a href="#" style="color:inherit;text-decoration:none">Privacy Policy</a>
+                <a href="#" style="color:inherit;text-decoration:none">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // State selection
+        function checkState() {
+            const select = document.getElementById('state-select');
+            const btn = document.getElementById('proceed-btn');
+            btn.disabled = !select.value;
+        }
+
+        function proceedToState() {
+            const select = document.getElementById('state-select');
+            if (select.value) {
+                const btn = document.getElementById('proceed-btn');
+                btn.innerHTML = `Redirecting... <svg class="spinner" width="20" height="20" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5" stroke-dasharray="31.4 31.4" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></circle></svg>`;
+                btn.style.opacity = '0.8';
+                setTimeout(() => {
+                    window.location.href = "portal.html?state=" + encodeURIComponent(select.value);
+                }, 800);
+            }
+        }
+
+        // Sticky header shadow
+        window.addEventListener('scroll', () => {
+            document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Animated stat counters
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const nums = entry.target.querySelectorAll('.stat-number');
+                    nums.forEach(num => {
+                        const target = parseInt(num.dataset.target);
+                        const suffix = num.textContent.replace(/[0-9]/g, '');
+                        let current = 0;
+                        const step = Math.ceil(target / 40);
+                        const timer = setInterval(() => {
+                            current += step;
+                            if (current >= target) { current = target; clearInterval(timer); }
+                            num.textContent = current + suffix;
+                        }, 30);
+                    });
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.stats-grid').forEach(r => statObserver.observe(r));
+    </script>
+
+    <style>
+        .chatbot-btn { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: linear-gradient(135deg, #1A4FD6, #0EA5E9); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(26, 79, 214, 0.4); color: white; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; z-index: 3000; transition: transform 0.2s; }
+        .chatbot-btn:hover { transform: scale(1.1); }
+        .chatbot-badge { position: absolute; top: 0; right: 0; width: 16px; height: 16px; background: #F59E0B; border-radius: 50%; border: 2px solid white; }
+    </style>
+
+    <!-- CHATBOT -->
+    <button class="chatbot-btn" onclick="toggleChat()" title="DriveEase Virtual Assistant">
+        <img src="chatbot-logo.svg" alt="DEVA Logo" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+        <span class="chatbot-badge"></span>
+    </button>
+
+    <!-- CHATBOT ENGINE -->
+    <script src="chatbot-knowledge.js"></script>
+    <script src="chatbot-nlp.js"></script>
+    <script src="chatbot-ui.js"></script>
+</body>
+
+</html>

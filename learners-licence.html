@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Learner's Licence | DriveEase</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --navy: #0D1B3E;
+            --blue: #1A4FD6;
+            --sky: #3B82F6;
+            --teal: #0EA5E9;
+            --accent: #F59E0B;
+            --green: #10B981;
+            --light: #F0F6FF;
+            --white: #FFFFFF;
+            --gray: #6B7280;
+            --gray-light: #E5EDF8;
+            --text: #1E293B;
+            --radius: 14px;
+            --shadow: 0 4px 24px rgba(26, 79, 214, 0.10);
+            --shadow-lg: 0 12px 40px rgba(13, 27, 62, 0.14);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--light);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0 32px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-emblem {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--navy), var(--blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .brand-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .brand-name span {
+            color: var(--blue);
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ─── WIZARD ─── */
+        .wizard-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .wizard-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .wizard-header h1 {
+            font-size: 1.75rem;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .wizard-header p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gray-light);
+            z-index: 0;
+        }
+
+        .step-indicator {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border: 2px solid var(--gray-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gray);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            border-color: var(--blue);
+            background: var(--blue);
+            color: var(--white);
+            box-shadow: 0 0 0 4px rgba(26, 79, 214, 0.1);
+        }
+
+        .step-indicator.completed {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--white);
+        }
+
+        .step-label {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-indicator.active .step-label {
+            color: var(--blue);
+        }
+
+        /* Form Content */
+        .step-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1.5px solid var(--gray-light);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9375rem;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--blue);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(26, 79, 214, 0.05);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Buttons */
+        .wizard-footer {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-prev {
+            background: var(--light);
+            color: var(--navy);
+        }
+
+        .btn-prev:hover {
+            background: var(--gray-light);
+        }
+
+        .btn-next {
+            background: var(--blue);
+            color: var(--white);
+            margin-left: auto;
+        }
+
+        .btn-next:hover {
+            background: var(--navy);
+            transform: translateY(-1px);
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .instruction-card {
+            background: var(--navy);
+            color: white;
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .instruction-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instruction-list {
+            list-style: none;
+        }
+
+        .instruction-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .instruction-num {
+            width: 20px;
+            height: 20px;
+            background: var(--blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .info-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+        }
+
+        .info-card h4 {
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            font-size: 0.875rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ─── UPLOAD BOX ─── */
+        .upload-area {
+            border: 2px dashed var(--gray-light);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--light);
+        }
+
+        .upload-area:hover {
+            border-color: var(--blue);
+            background: var(--white);
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .upload-text strong {
+            color: var(--blue);
+        }
+
+        /* ─── SUCCESS PAGE ─── */
+        .success-content {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .success-desc {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .receipt-preview {
+            background: var(--light);
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.875rem;
+        }
+
+        .receipt-label {
+            color: var(--gray);
+        }
+
+        .receipt-val {
+            font-weight: 600;
+            color: var(--navy);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="portal.html" class="brand">
+            <div class="brand-emblem">D</div>
+            <div class="brand-name">Drive<span>Ease</span></div>
+        </a>
+        <div class="user-profile">
+            <!-- Simplified user profile for now -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 0.875rem; font-weight: 600; color: var(--navy);">Hemanshu</span>
+                <div
+                    style="width: 32px; height: 32px; background: var(--blue); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">
+                    H</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <div class="wizard-card">
+                <div class="wizard-header">
+                    <h1>New Learner's Licence</h1>
+                    <p>Complete the following steps to apply for your LL</p>
+                </div>
+
+                <div class="progress-steps">
+                    <div class="step-indicator active" data-step="1">1<span class="step-label">Details</span></div>
+                    <div class="step-indicator" data-step="2">2<span class="step-label">Documents</span></div>
+                    <div class="step-indicator" data-step="3">3<span class="step-label">E-Sign</span></div>
+                    <div class="step-indicator" data-step="4">4<span class="step-label">Slot</span></div>
+                    <div class="step-indicator" data-step="5">5<span class="step-label">Fees</span></div>
+                    <div class="step-indicator" data-step="6">6<span class="step-label">Verify</span></div>
+                    <div class="step-indicator" data-step="7">7<span class="step-label">Receipt</span></div>
+                </div>
+
+                <div id="step-1" class="step-content active">
+                    <h3 style="margin-bottom: 24px; color: var(--navy);">Application Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" placeholder="Enter first name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" placeholder="Enter last name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <select class="form-select">
+                            <option>Gujarat</option>
+                            <option>Maharashtra</option>
+                            <option>Delhi</option>
+                            <option>Karnataka</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">RTO Office</label>
+                        <select class="form-select">
+                            <option>GJ-01 (Ahmedabad)</option>
+                            <option>GJ-05 (Surat)</option>
+                            <option>GJ-03 (Rajkot)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Vehicle Category</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <label
+                                style="display: flex; align-items: center; gap: 8px; background: var(--light); padding: 10px 16px; border-radius: 8px; cursor: pointer; border: 1.5px solid var(--gray-light);">
+                                <input type="checkbox"> MCWG (Motor Cycle With Gear)
+                            </label>
+                            <label
+                                style="display: flex; align-items: center; gap: 8px; background: var(--light); padding: 10px 16px; border-radius: 8px; cursor: pointer; border: 1.5px solid var(--gray-light);">
+                                <input type="checkbox"> LMV (Light Motor Vehicle)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step-2" class="step-content">
+                    <h3 style="margin-bottom: 24px; color: var(--navy);">Upload Documents</h3>
+                    <p style="margin-bottom: 20px; color: var(--gray); font-size: 0.9rem;">Please upload self-attested
+                        copies of the following documents (Max 500KB, PDF/JPG)</p>
+
+                    <div class="form-group">
+                        <label class="form-label">Proof of Age</label>
+                        <div class="upload-area">
+                            <div class="upload-icon">📄</div>
+                            <p class="upload-text"><strong>Click to upload</strong> or drag and drop<br>Aadhar Card,
+                                Birth Certificate, or School LC</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Proof of Address</label>
+                        <div class="upload-area">
+                            <div class="upload-icon">🏠</div>
+                            <p class="upload-text"><strong>Click to upload</strong> or drag and drop<br>Voter ID, Ration
+                                Card, or Passport</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step-3" class="step-content">
+                    <h3 style="margin-bottom: 24px; color: var(--navy);">Upload Photo & Signature</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Applicant Photo</label>
+                            <div class="upload-area" style="padding: 20px;">
+                                <div
+                                    style="width: 100px; height: 120px; background: #eee; margin: 0 auto 10px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999;">
+                                    Photo</div>
+                                <p class="upload-text"><strong>Upload Photo</strong></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Applicant Signature</label>
+                            <div class="upload-area" style="padding: 20px;">
+                                <div
+                                    style="width: 150px; height: 60px; background: #eee; margin: 30px auto 10px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999;">
+                                    Signature</div>
+                                <p class="upload-text"><strong>Upload Signature</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step-4" class="step-content">
+                    <h3 style="margin-bottom: 24px; color: var(--navy);">LL Slot Booking</h3>
+                    <div class="form-group">
+                        <label class="form-label">Select Date</label>
+                        <input type="date" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Available Slots</label>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                            <button class="btn"
+                                style="background: var(--light); border: 1.5px solid var(--gray-light); font-size: 0.8rem;">10:00
+                                - 11:00 AM</button>
+                            <button class="btn"
+                                style="background: var(--light); border: 1.5px solid var(--gray-light); font-size: 0.8rem;">11:30
+                                - 12:30 PM</button>
+                            <button class="btn" style="background: var(--blue); color: white; font-size: 0.8rem;">02:00
+                                - 03:00 PM</button>
+                            <button class="btn"
+                                style="background: var(--light); border: 1.5px solid var(--gray-light); font-size: 0.8rem;">03:30
+                                - 04:30 PM</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step-5" class="step-content">
+                    <h3 style="margin-bottom: 24px; color: var(--navy);">Fee Payment</h3>
+                    <div class="receipt-preview">
+                        <div class="receipt-row">
+                            <span class="receipt-label">LL Application Fee</span>
+                            <span class="receipt-val">₹ 150.00</span>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="receipt-label">LL Test Fee</span>
+                            <span class="receipt-val">₹ 50.00</span>
+                        </div>
+                        <div class="receipt-row"
+                            style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;">
+                            <span class="receipt-label" style="font-weight: 700; color: var(--navy);">Total
+                                Amount</span>
+                            <span class="receipt-val" style="font-size: 1.1rem; color: var(--blue);">₹ 200.00</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payment Gateway</label>
+                        <select class="form-select">
+                            <option>SBI ePay</option>
+                            <option>HDFC Bank</option>
+                            <option>Razorpay</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="step-6" class="step-content">
+                    <h3 style="margin-bottom: 24px; color: var(--navy);">Payment Verification</h3>
+                    <div style="text-align: center; padding: 40px 0;">
+                        <div
+                            style="width: 60px; height: 60px; border: 4px solid var(--gray-light); border-top-color: var(--blue); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;">
+                        </div>
+                        <p style="color: var(--gray);">Please wait while we verify your payment...</p>
+                    </div>
+                </div>
+                <style>
+                    @keyframes spin {
+                        to {
+                            transform: rotate(360deg);
+                        }
+                    }
+                </style>
+
+                <div id="step-7" class="step-content">
+                    <div class="success-content">
+                        <div class="success-icon">✓</div>
+                        <h2 class="success-title">Application Submitted!</h2>
+                        <p class="success-desc">Your Learner's Licence application has been successfully received.</p>
+
+                        <div class="receipt-preview">
+                            <div class="receipt-row">
+                                <span class="receipt-label">Application Number</span>
+                                <span class="receipt-val">LL2026/004582</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span class="receipt-label">Applicant Name</span>
+                                <span class="receipt-val">Hemanshu Vaghela</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span class="receipt-label">Slot Appointment</span>
+                                <span class="receipt-val">15 Mar 2026, 02:00 PM</span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="window.print()">
+                            <span>🖨️</span> Print Receipt
+                        </button>
+                    </div>
+                </div>
+
+                <div class="wizard-footer">
+                    <button id="btn-prev" class="btn btn-prev" style="visibility: hidden;" onclick="changeStep(-1)">
+                        <span>←</span> Back
+                    </button>
+                    <button id="btn-next" class="btn btn-next" onclick="changeStep(1)">
+                        Continue <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="instruction-card">
+                <h3><span>💡</span> Applicant Instructions</h3>
+                <ul class="instruction-list">
+                    <li class="instruction-item">
+                        <div class="instruction-num">1</div>
+                        <div>Ensure all details match your Aadhar records to avoid rejection.</div>
+                    </li>
+                    <li class="instruction-item">
+                        <div class="instruction-num">2</div>
+                        <div>Keep digital copies of Proof of Age and Address ready (PDF/JPG, < 500KB).</div>
+                    </li>
+                    <li class="instruction-item">
+                        <div class="instruction-num">3</div>
+                        <div>Photo should have a white background and clear face visibility.</div>
+                    </li>
+                    <li class="instruction-item">
+                        <div class="instruction-num">4</div>
+                        <div>Test slots are available only for the coming 30 days.</div>
+                    </li>
+                    <li class="instruction-item">
+                        <div class="instruction-num">5</div>
+                        <div>Fees once paid are non-refundable according to government policy.</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h4><span>⏳</span> Processing Timeline</h4>
+                <p>LL applications are typically processed within 24-48 hours. The LL will be issued immediately after
+                    passing the online test.</p>
+            </div>
+
+            <div class="info-card" style="border-left-color: var(--blue);">
+                <h4><span>📞</span> Need Help?</h4>
+                <p>Contact our helpdesk at <strong>1800-123-4455</strong> or visit the nearest Sewa Kendra for
+                    assistance.</p>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 7;
+
+        function changeStep(delta) {
+            const nextStep = currentStep + delta;
+
+            if (nextStep < 1 || nextStep > totalSteps) return;
+
+            // Hide current step
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            document.querySelector(`.step-indicator[data-step="${currentStep}"]`).classList.remove('active');
+
+            if (delta > 0) {
+                document.querySelector(`.step-indicator[data-step="${currentStep}"]`).classList.add('completed');
+            }
+
+            // Show next step
+            currentStep = nextStep;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            document.querySelector(`.step-indicator[data-step="${currentStep}"]`).classList.add('active');
+
+            // Update footer buttons
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+
+            btnPrev.style.visibility = currentStep === 1 || currentStep === 7 ? 'hidden' : 'visible';
+
+            if (currentStep === 6) {
+                btnNext.innerHTML = 'Verify Payment <span>→</span>';
+                // Simulate verification delay
+                setTimeout(() => {
+                    if (currentStep === 6) changeStep(1);
+                }, 2000);
+            } else if (currentStep === 5) {
+                btnNext.innerHTML = 'Pay Now <span>₹</span>';
+            } else if (currentStep === 7) {
+                btnNext.style.display = 'none';
+                document.querySelector('.wizard-header').innerHTML = '<h1>Application Complete</h1><p>Your receipt is ready for download</p>';
+                // Submit to backend
+                submitLLApplication();
+            } else {
+                btnNext.innerHTML = 'Continue <span>→</span>';
+                btnNext.style.display = 'inline-flex';
+            }
+
+            // Scroll to top of card
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function submitLLApplication() {
+            const inputs = document.querySelectorAll('.form-input, .form-select');
+            const data = {
+                type: 'learner',
+                first_name: inputs[0]?.value || localStorage.getItem('driveease_user_name')?.split(' ')[0] || 'Applicant',
+                last_name: inputs[1]?.value || localStorage.getItem('driveease_user_name')?.split(' ').slice(1).join(' ') || '',
+                dob: inputs[2]?.value || '',
+                gender: inputs[3]?.value || '',
+                state: inputs[4]?.value || 'Gujarat',
+                rto_office: inputs[5]?.value || 'Subhash Bridge RTO, Ahmedabad',
+                vehicle_category: inputs[6]?.value || 'LMV (Light Motor Vehicle)',
+                fee_amount: 535,
+                payment_gateway: inputs[7]?.value || 'Net Banking / UPI',
+                user_id: localStorage.getItem('driveease_user_id') || null
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/applications', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (response.ok && result.application) {
+                    // Update application number in receipt
+                    const appNumEl = document.querySelector('.receipt-val');
+                    if (appNumEl) appNumEl.textContent = result.application.application_number;
+                    console.log('✅ LL Application submitted:', result.application.application_number);
+                }
+            } catch (e) {
+                console.warn('Backend unavailable for LL submission:', e.message);
+            }
+        }
+    </script>
+
+    <style>
+        .chatbot-btn { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: linear-gradient(135deg, #1A4FD6, #0EA5E9); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(26, 79, 214, 0.4); color: white; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; z-index: 3000; transition: transform 0.2s; }
+        .chatbot-btn:hover { transform: scale(1.1); }
+        .chatbot-badge { position: absolute; top: 0; right: 0; width: 16px; height: 16px; background: #F59E0B; border-radius: 50%; border: 2px solid white; }
+    </style>
+
+    <!-- CHATBOT -->
+    <button class="chatbot-btn" onclick="toggleChat()" title="DriveEase Virtual Assistant">
+        <img src="chatbot-logo.svg" alt="DEVA Logo" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+        <span class="chatbot-badge"></span>
+    </button>
+
+    <!-- CHATBOT ENGINE -->
+    <script src="chatbot-knowledge.js"></script>
+    <script src="chatbot-nlp.js"></script>
+    <script src="chatbot-ui.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sitemap – DriveEase Portal</title>
+    <meta name="description" content="DriveEase Sitemap – Navigate all pages and services of the DriveEase portal." />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --navy: #0D1B3E;
+            --blue: #1A4FD6;
+            --sky: #3B82F6;
+            --teal: #0EA5E9;
+            --accent: #F59E0B;
+            --green: #10B981;
+            --light: #F0F6FF;
+            --white: #FFFFFF;
+            --gray: #6B7280;
+            --gray-light: #E5EDF8;
+            --text: #1E293B;
+            --radius: 14px;
+            --shadow: 0 4px 24px rgba(26, 79, 214, 0.10);
+            --shadow-lg: 0 12px 40px rgba(13, 27, 62, 0.14);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Sora', sans-serif; }
+
+        /* ─── TOPBAR ─── */
+        .topbar { background: var(--navy); color: #A8C4F5; font-size: 0.75rem; padding: 6px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+        .topbar a { color: #A8C4F5; text-decoration: none; margin-left: 16px; transition: color 0.2s; }
+        .topbar a:hover { color: var(--accent); }
+
+        /* ─── HEADER ─── */
+        header { background: var(--white); border-bottom: 1px solid var(--gray-light); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 12px rgba(13, 27, 62, 0.07); }
+        .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 20px; }
+        .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .brand-emblem { width: 48px; height: 48px; background: linear-gradient(135deg, var(--navy), var(--blue)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -1px; }
+        .brand-name { font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--navy); }
+        .brand-name span { color: var(--blue); }
+        .btn { padding: 9px 20px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.18s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: var(--blue); color: white; box-shadow: 0 2px 8px rgba(26, 79, 214, 0.25); }
+        .btn-primary:hover { background: var(--navy); transform: translateY(-1px); }
+
+        /* ─── HERO BANNER ─── */
+        .sitemap-hero { background: linear-gradient(135deg, var(--navy) 0%, #1A3A8F 60%, #1A5FBF 100%); color: white; padding: 48px 32px; text-align: center; position: relative; overflow: hidden; }
+        .sitemap-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: rgba(59, 130, 246, 0.12); }
+        .sitemap-hero::after { content: ''; position: absolute; bottom: -80px; left: 10%; width: 200px; height: 200px; border-radius: 50%; background: rgba(245, 158, 11, 0.07); }
+        .sitemap-hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 12px; position: relative; z-index: 1; animation: fadeInUp 0.6s ease; }
+        .sitemap-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; position: relative; z-index: 1; animation: fadeInUp 0.7s ease 0.1s both; }
+
+        /* ─── SITEMAP TREE VIEW ─── */
+        .sitemap-wrap { max-width: 1000px; margin: 0 auto; padding: 48px 32px 60px; }
+        .tree-container { background: var(--white); border-radius: 18px; padding: 40px; box-shadow: 0 2px 12px rgba(13, 27, 62, 0.06); overflow-x: auto; }
+        .tree, .tree ul { list-style: none; margin: 0; padding: 0; }
+        .tree ul { margin-left: 2em; padding-left: 1.5em; position: relative; }
+        .tree ul::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; border-left: 2px solid var(--gray-light); z-index: 1; }
+        .tree li { position: relative; margin: 16px 0; animation: fadeInUp 0.5s ease both; }
+        .tree > li > ul > li:nth-child(1) { animation-delay: 0.05s; }
+        .tree > li > ul > li:nth-child(2) { animation-delay: 0.1s; }
+        .tree > li > ul > li:nth-child(3) { animation-delay: 0.15s; }
+        .tree > li > ul > li:nth-child(4) { animation-delay: 0.2s; }
+        .tree > li > ul > li:nth-child(5) { animation-delay: 0.25s; }
+        .tree ul > li::before { content: ''; position: absolute; top: 22px; left: -1.5em; width: 1.5em; border-bottom: 2px solid var(--gray-light); z-index: 1; }
+        
+        /* Stop the vertical line at the last item's connecting line */
+        .tree ul > li:last-child::after { content: ''; position: absolute; top: 24px; left: -1.5em; bottom: -20px; border-left: 4px solid var(--white); z-index: 1; margin-left:-1px; }
+
+        .tree-node { display: inline-flex; align-items: center; gap: 12px; background: var(--light); padding: 8px 16px; border-radius: 12px; text-decoration: none; color: var(--navy); font-weight: 700; border: 1.5px solid transparent; transition: all 0.2s; position: relative; z-index: 2; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .tree-node.root { padding: 12px 24px; background: var(--navy); color: white; border-radius: 14px; font-size: 1.125rem; }
+        .tree-node.root .tree-icon { background: rgba(255,255,255,0.1); color: white; box-shadow: none; }
+        .tree-node:hover { border-color: var(--blue); background: white; transform: translateY(-2px); color: var(--blue); box-shadow: var(--shadow); }
+        .tree-node.root:hover { border-color: transparent; background: var(--blue); color: white; transform: translateY(-3px); }
+        .tree-icon { font-size: 1.25rem; width: 36px; height: 36px; background: white; display: flex; align-items: center; justify-content: center; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); flex-shrink: 0; }
+        
+        .tree-leaf { background: white; font-weight: 500; font-size: 0.9rem; padding: 8px 14px; color: var(--text); border: 1px solid var(--gray-light); box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+        .tree-leaf:hover { border-color: var(--teal); color: var(--blue); background: #F8FAFC; transform: translateX(5px); }
+        .tree-leaf .tree-icon { width: 26px; height: 26px; font-size: 0.9rem; background: var(--light); box-shadow: none; color: var(--gray); font-style: normal; }
+
+        /* ─── FOOTER ─── */
+        footer { background: var(--navy); color: rgba(255, 255, 255, 0.7); padding: 40px 32px 20px; margin-top: 20px; }
+        .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 28px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .footer-brand .brand-name { color: white; font-size: 1.125rem; }
+        .footer-brand p { font-size: 0.8125rem; line-height: 1.6; margin-top: 10px; max-width: 260px; }
+        .footer-col h5 { color: white; font-size: 0.8125rem; font-weight: 700; margin-bottom: 12px; }
+        .footer-col a { display: block; font-size: 0.78125rem; color: rgba(255, 255, 255, 0.6); text-decoration: none; margin-bottom: 7px; transition: color 0.15s; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 0.75rem; }
+        .footer-logos { display: flex; gap: 14px; align-items: center; }
+        .footer-logo-box { background: rgba(255, 255, 255, 0.07); border-radius: 8px; padding: 6px 14px; font-size: 0.6875rem; font-weight: 700; color: rgba(255, 255, 255, 0.8); }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 900px) {
+            .sitemap-grid { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .sitemap-hero h1 { font-size: 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            .sitemap-wrap { padding: 24px 16px 40px; }
+            .header-inner { padding: 0 16px; }
+            .topbar { padding: 6px 16px; }
+            .footer-inner { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <div>🇮🇳 Ministry of Road Transport &amp; Highways, Government of India</div>
+        <div>
+            <a href="#">Screen Reader</a>
+            <a href="#">Skip to Content</a>
+            <a href="sitemap.html" style="color:var(--accent)">Sitemap</a>
+            <a href="#">Contact Us</a>
+            <a href="about.html">About DriveEase</a>
+            <a href="product.html">Product</a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <a class="brand" href="portal.html">
+                <div class="brand-emblem">D</div>
+                <div class="brand-text">
+                    <div class="brand-name">Drive<span>Ease</span></div>
+                </div>
+            </a>
+            <div style="display:flex;align-items:center;gap:12px">
+                <a href="portal.html" class="btn btn-primary">← Back to Portal</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="sitemap-hero">
+        <h1>🗺️ Sitemap</h1>
+        <p>Navigate all pages and services available on the DriveEase portal.</p>
+    </section>
+
+    <!-- SITEMAP CONTENT -->
+    <div class="sitemap-wrap">
+        <div class="tree-container">
+            <ul class="tree">
+                <li>
+                    <div class="tree-node root">
+                        <div class="tree-icon">🌐</div>
+                        DriveEase Services Overview
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="tree-node">
+                                <div class="tree-icon" style="background:#EFF6FF">🏠</div>
+                                Main Pages
+                            </div>
+                            <ul>
+                                <li><a href="index.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>Home — State Selection</a></li>
+                                <li><a href="portal.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>Portal Dashboard</a></li>
+                                <li><a href="about.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>About DriveEase</a></li>
+                                <li><a href="login.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>Login / Register</a></li>
+                                <li><a href="product.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>Product Details</a></li>
+                                <li><a href="sitemap.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>Sitemap</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="tree-node">
+                                <div class="tree-icon" style="background:#F0FDF4">📗</div>
+                                Learner Licence
+                            </div>
+                            <ul>
+                                <li><a href="learners-licence.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>Application for New Learner Licence</a></li>
+                                <li><a href="service-form.html?service=Expired+Learner+Licence" class="tree-node tree-leaf"><i class="tree-icon">→</i>Expired Learner Licence Issue Again</a></li>
+                                <li><a href="service-form.html?service=Application+Edit" class="tree-node tree-leaf"><i class="tree-icon">→</i>Application Edit (Before Fee Payment)</a></li>
+                                <li><a href="service-form.html?service=Duplicate+LL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Services for Duplicate LL / Address Change</a></li>
+                                <li><a href="service-form.html?service=Print+Learner+Licence" class="tree-node tree-leaf"><i class="tree-icon">→</i>Print Learner Licence (Form 3)</a></li>
+                                <li><a href="service-form.html?service=LL+Extract+Print" class="tree-node tree-leaf"><i class="tree-icon">→</i>Learner Licence Extract Print</a></li>
+                                <li><a href="service-form.html?service=Tutorial+LL+Test" class="tree-node tree-leaf"><i class="tree-icon">→</i>Tutorial for LL Test</a></li>
+                                <li><a href="service-form.html?service=Online+LL+Test" class="tree-node tree-leaf"><i class="tree-icon">→</i>Online LL Test (Stall)</a></li>
+                                <li><a href="service-form.html?service=Mock+Test+LL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Mock Test for LL</a></li>
+                                <li><a href="service-form.html?service=Sample+Question+LL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Sample Question for LL Test</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="tree-node">
+                                <div class="tree-icon" style="background:#EFF6FF">🪪</div>
+                                Driving Licence
+                            </div>
+                            <ul>
+                                <li><a href="driving-licence.html" class="tree-node tree-leaf"><i class="tree-icon">→</i>New Driving Licence</a></li>
+                                <li><a href="service-form.html?service=Renewal+Duplicate+DL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Renewal / Duplicate / AEDL / IDP / Others</a></li>
+                                <li><a href="service-form.html?service=IDP+Print" class="tree-node tree-leaf"><i class="tree-icon">→</i>IDP Print Licence</a></li>
+                                <li><a href="service-form.html?service=Print+DL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Print Driving Licence</a></li>
+                                <li><a href="service-form.html?service=DL+Club" class="tree-node tree-leaf"><i class="tree-icon">→</i>DL Club</a></li>
+                                <li><a href="service-form.html?service=DL+Extract" class="tree-node tree-leaf"><i class="tree-icon">→</i>DL Extract Print</a></li>
+                                <li><a href="service-form.html?service=Online+PSV+Badge" class="tree-node tree-leaf"><i class="tree-icon">→</i>Online PSV Badge Test</a></li>
+                                <li><a href="service-form.html?service=Display+IDP" class="tree-node tree-leaf"><i class="tree-icon">→</i>Display IDP Details</a></li>
+                                <li><a href="service-form.html?service=DL+Test+Sheet" class="tree-node tree-leaf"><i class="tree-icon">→</i>Driving Licence Test Sheet</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="tree-node">
+                                <div class="tree-icon" style="background:#FEF3C7">🚌</div>
+                                Conductor Licence
+                            </div>
+                            <ul>
+                                <li><a href="service-form.html?service=New+Conductor+Licence" class="tree-node tree-leaf"><i class="tree-icon">→</i>New Conductor Licence</a></li>
+                                <li><a href="service-form.html?service=Temporary+CL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Temporary Conductor Licence</a></li>
+                                <li><a href="service-form.html?service=Services+on+CL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Services on Conductor Licence</a></li>
+                                <li><a href="service-form.html?service=Online+CL+Test" class="tree-node tree-leaf"><i class="tree-icon">→</i>Online Conductor Licence Test</a></li>
+                                <li><a href="service-form.html?service=Print+CL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Print Conductors Licence</a></li>
+                                <li><a href="service-form.html?service=CL+Extract" class="tree-node tree-leaf"><i class="tree-icon">→</i>CL Extract Print</a></li>
+                                <li><a href="service-form.html?service=Regularize+Provisional+CL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Regularize Provisional CL</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="tree-node">
+                                <div class="tree-icon" style="background:#EDE9FE">📅</div>
+                                Appointments
+                            </div>
+                            <ul>
+                                <li><a href="appointment.html?type=LL" class="tree-node tree-leaf"><i class="tree-icon">→</i>LL Test Slot Booking</a></li>
+                                <li><a href="appointment.html?type=DL" class="tree-node tree-leaf"><i class="tree-icon">→</i>DL Test Slot Booking</a></li>
+                                <li><a href="appointment.html?type=Services" class="tree-node tree-leaf"><i class="tree-icon">→</i>DL Services Slot Booking</a></li>
+                                <li><a href="appointment.html?action=Cancel+LL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Cancel LL Test Slot</a></li>
+                                <li><a href="appointment.html?action=Cancel+DL" class="tree-node tree-leaf"><i class="tree-icon">→</i>Cancel DL Test Slot</a></li>
+                                <li><a href="appointment.html?action=Cancel+Services" class="tree-node tree-leaf"><i class="tree-icon">→</i>Cancel DL Services Slot</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="tree-node">
+                                <div class="tree-icon" style="background:#FEE2E2">⚙️</div>
+                                Other Services
+                            </div>
+                            <ul>
+                                <li><a href="service-form.html?service=Search+Related+Applications" class="tree-node tree-leaf"><i class="tree-icon">→</i>Search Related Applications</a></li>
+                                <li><a href="service-form.html?service=DL+Search" class="tree-node tree-leaf"><i class="tree-icon">→</i>DL Search</a></li>
+                                <li><a href="service-form.html?service=Find+Application+Number" class="tree-node tree-leaf"><i class="tree-icon">→</i>Find Application Number</a></li>
+                                <li><a href="service-form.html?service=Cancel+Application" class="tree-node tree-leaf"><i class="tree-icon">→</i>Cancel Application</a></li>
+                                <li><a href="service-form.html?service=Track+Dispatch" class="tree-node tree-leaf"><i class="tree-icon">→</i>Track Dispatch Article Status</a></li>
+                                <li><a href="service-form.html?service=Mobile+Number+Update" class="tree-node tree-leaf"><i class="tree-icon">→</i>Mobile Number Update</a></li>
+                                <li><a href="service-form.html?service=Camp+Registration" class="tree-node tree-leaf"><i class="tree-icon">→</i>Camp Registration</a></li>
+                                <li><a href="service-form.html?service=Add+Class+Vehicles" class="tree-node tree-leaf"><i class="tree-icon">→</i>Add Class of Vehicles</a></li>
+                                <li><a href="service-form.html?service=Fee+Payments" class="tree-node tree-leaf"><i class="tree-icon">→</i>Fee Payments</a></li>
+                                <li><a href="service-form.html?service=Verify+Payment+Status" class="tree-node tree-leaf"><i class="tree-icon">→</i>Verify Payment Status</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+                    <div class="brand-emblem" style="width:40px;height:40px;font-size:18px">D</div>
+                    <div class="brand-name" style="color:white">Drive<span style="color:var(--teal)">Ease</span></div>
+                </div>
+                <p>Official portal of the Ministry of Road Transport &amp; Highways, Government of India. Serving citizens with transparent, digital-first transport services.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Licence Services</h5>
+                <a href="#">Apply Learner Licence</a>
+                <a href="#">Apply Driving Licence</a>
+                <a href="#">DL Renewal</a>
+                <a href="#">Duplicate DL</a>
+                <a href="#">International Permit</a>
+            </div>
+            <div class="footer-col">
+                <h5>Quick Links</h5>
+                <a href="#">Application Status</a>
+                <a href="#">Fee Payments</a>
+                <a href="#">Book Appointment</a>
+                <a href="#">Upload Document</a>
+                <a href="#">Find Doctor</a>
+            </div>
+            <div class="footer-col">
+                <h5>Resources</h5>
+                <a href="#">Acts &amp; Rules</a>
+                <a href="#">Road Safety</a>
+                <a href="#">User Manuals</a>
+                <a href="#">Parivahan Portal</a>
+                <a href="#">Organ Donor Pledge</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 DriveEase · Ministry of Road Transport &amp; Highways, Govt. of India. All rights reserved.</div>
+            <div class="footer-logos">
+                <div class="footer-logo-box">NIC</div>
+                <div class="footer-logo-box">Digital India</div>
+                <div class="footer-logo-box">G20 India</div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .chatbot-btn { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: linear-gradient(135deg, #1A4FD6, #0EA5E9); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(26, 79, 214, 0.4); color: white; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; z-index: 3000; transition: transform 0.2s; }
+        .chatbot-btn:hover { transform: scale(1.1); }
+        .chatbot-badge { position: absolute; top: 0; right: 0; width: 16px; height: 16px; background: #F59E0B; border-radius: 50%; border: 2px solid white; }
+    </style>
+
+    <!-- CHATBOT -->
+    <button class="chatbot-btn" onclick="toggleChat()" title="DriveEase Virtual Assistant">
+        <img src="chatbot-logo.svg" alt="DEVA Logo" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+        <span class="chatbot-badge"></span>
+    </button>
+
+    <!-- CHATBOT ENGINE -->
+    <script src="chatbot-knowledge.js"></script>
+    <script src="chatbot-nlp.js"></script>
+    <script src="chatbot-ui.js"></script>
+</body>
+
+</html>

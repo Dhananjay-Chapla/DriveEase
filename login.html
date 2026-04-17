@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DriveEase Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #2563EB;
+            --blue-dark: #1E40AF;
+            --blue-light: #EFF6FF;
+            --orange: #F97316;
+            --dark: #0F172A;
+            --gray: #64748B;
+            --gray-light: #F1F5F9;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --error: #EF4444;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-light);
+            color: var(--dark);
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 20px 60px rgba(13, 27, 62, 0.12);
+            min-height: 600px;
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Left Side - Branding & Info */
+        .brand-section {
+            flex: 1;
+            background: var(--blue);
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+            padding: 60px;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-section::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .brand-section::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            color: var(--blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-content h2 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .brand-content h2 span {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+        }
+
+        .brand-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .feature-list {
+            margin-top: 40px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1rem;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.15) rotate(-5deg);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Right Side - Forms */
+        .form-section {
+            flex: 1.2;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .form-content {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .form-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        label span {
+            color: var(--error);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--dark);
+            background: var(--white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 4px var(--blue-light);
+            transform: translateY(-2px);
+            background: linear-gradient(to bottom, var(--white), #EFF6FF);
+        }
+
+        .form-control.error {
+            border-color: var(--error);
+            background-color: #fef2f2;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .pass-wrapper {
+            position: relative;
+        }
+
+        .pass-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--gray);
+            padding: 5px;
+        }
+
+        .field-error {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-row input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--blue), #1E40AF);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1E40AF, #0F3294);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .divider {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-light);
+        }
+
+        .social-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .social-btn {
+            padding: 12px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            background: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            background: var(--gray-light);
+            border-color: var(--gray);
+        }
+
+        .success-banner {
+            background: #ecfdf5;
+            color: var(--success);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: none;
+            border: 1px solid #a7f3d0;
+            text-align: center;
+        }
+
+        .success-banner.show {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .brand-section {
+                display: none;
+            }
+
+            .login-container {
+                max-width: 500px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .form-section {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- BRAND SECTION -->
+        <div class="brand-section">
+            <div class="logo-wrapper">
+                <div class="logo-icon">D</div>
+                <div class="logo-text">DriveEase</div>
+            </div>
+
+            <div class="brand-content">
+                <h2>Direct. Digital.<br><span>DriveEase Portal</span></h2>
+                <p>Access all transport services in one secure, digital environment. Paperless, efficient, and built for
+                    you.</p>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">🪪</div>
+                        <span>Instant Licence Application & Renewal</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📍</div>
+                        <span>Real-time RTO Slot Booking</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <span>Secure Aadhaar-Linked Verification</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="font-size: 0.85rem; opacity: 0.7; z-index: 1;">
+                &copy; 2024 Ministry of Road Transport & Highways
+            </div>
+        </div>
+
+        <!-- FORM SECTION -->
+        <div class="form-section">
+            <div style="margin-bottom: 25px;">
+                <h3 style="font-size: 1.8rem; color: var(--dark); font-weight: 700;">Welcome Back</h3>
+                <p style="color: var(--gray); margin-top: 5px;">Login to access your DriveEase services</p>
+            </div>
+
+            <div class="form-wrapper">
+                <!-- LOGIN FORM -->
+                <div class="form-content active" id="form-login">
+                    <div class="success-banner" id="login-success">✅ Login successful! Redirecting...</div>
+                    <div class="form-group">
+                        <label for="login-id">User ID / Aadhaar / DL Number <span>*</span></label>
+                        <input type="text" class="form-control" id="login-id" placeholder="Enter identification number">
+                        <div class="field-error" id="err-login-id">This field is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-pass">Password <span>*</span></label>
+                        <div class="pass-wrapper">
+                            <input type="password" class="form-control" id="login-pass" placeholder="Enter password">
+                            <button class="pass-toggle" onclick="togglePass('login-pass', this)">👁</button>
+                        </div>
+                        <div class="field-error" id="err-login-pass">Password is required</div>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Keep me logged in</label>
+                    </div>
+                    <button class="btn-primary" onclick="doLogin()">Login Securely &rarr;</button>
+                    <div class="divider">or continue with</div>
+                    <div class="social-btns">
+                        <button class="social-btn" onclick="altLogin('DigiLocker')">🔐 DigiLocker</button>
+                        <button class="social-btn" onclick="window.location.href='otp-login.html'">📱 SMS OTP</button>
+                    </div>
+                    <div style="text-align:center; margin-top:20px;">
+                        <a href="register.html" style="color:var(--blue); font-weight:600; text-decoration:none;">Don't
+                            have an account? Register here</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:30px;">
+                <a href="portal.html"
+                    style="color:var(--gray); text-decoration:none; font-size:0.9rem; font-weight:500;">
+                    &larr; Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Redirect if already logged in
+        if (localStorage.getItem('driveease_logged_in') === 'true') {
+            window.location.href = 'portal.html';
+        }
+
+        function togglePass(id, btn) {
+            const el = document.getElementById(id);
+            if (el.type === 'password') {
+                el.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                el.type = 'password';
+                btn.textContent = '👁';
+            }
+        }
+
+        async function doLogin() {
+            const id = document.getElementById('login-id').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            document.getElementById('err-login-id').classList.toggle('show', !id);
+            document.getElementById('err-login-pass').classList.toggle('show', !pass);
+
+            if (!id || !pass) return;
+
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mobile: id, password: pass })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.error || 'Login failed. Please check your credentials.');
+                    return;
+                }
+
+                // Store session data
+                localStorage.setItem('driveease_logged_in', 'true');
+                localStorage.setItem('driveease_user_name', data.user.first_name + ' ' + data.user.last_name);
+                localStorage.setItem('driveease_user_id', data.user.id);
+                localStorage.setItem('driveease_token', data.token);
+
+                document.getElementById('login-success').classList.add('show');
+                setTimeout(() => { window.location.href = 'portal.html'; }, 1500);
+            } catch (err) {
+                // Fallback to localStorage for demo
+                console.warn('Backend unavailable, using demo login:', err.message);
+                document.getElementById('login-success').classList.add('show');
+                localStorage.setItem('driveease_logged_in', 'true');
+                localStorage.setItem('driveease_user_name', id);
+                setTimeout(() => { window.location.href = 'portal.html'; }, 1500);
+            }
+        }
+
+        function altLogin(provider) {
+            alert('Redirecting to ' + provider + ' gateway...');
+        }
+    </script>
+
+    <style>
+        .chatbot-btn { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: linear-gradient(135deg, #1A4FD6, #0EA5E9); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(26, 79, 214, 0.4); color: white; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; z-index: 3000; transition: transform 0.2s; }
+        .chatbot-btn:hover { transform: scale(1.1); }
+        .chatbot-badge { position: absolute; top: 0; right: 0; width: 16px; height: 16px; background: #F59E0B; border-radius: 50%; border: 2px solid white; }
+    </style>
+
+    <!-- CHATBOT -->
+    <button class="chatbot-btn" onclick="toggleChat()" title="DriveEase Virtual Assistant">
+        <img src="chatbot-logo.svg" alt="DEVA Logo" style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+        <span class="chatbot-badge"></span>
+    </button>
+
+    <!-- CHATBOT ENGINE -->
+    <script src="chatbot-knowledge.js"></script>
+    <script src="chatbot-nlp.js"></script>
+    <script src="chatbot-ui.js"></script>
+</body>
+
+</html>

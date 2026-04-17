@@ -1,0 +1,33 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="brain_grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#D946EF" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Brain Hemisphere -->
+  <path d="M50 85C35 85 20 75 15 60C10 45 15 25 30 15C35 12 45 10 50 10V85Z" fill="url(#brain_grad)" />
+  
+  <!-- Right Brain Hemisphere -->
+  <path d="M50 85C65 85 80 75 85 60C90 45 85 25 70 15C65 12 55 10 50 10V85Z" fill="url(#brain_grad)" />
+
+  <!-- Circuit Lines & Nodes - Symmetric -->
+  <!-- Left Side -->
+  <path d="M35 25L45 25M30 40L40 40M25 55L35 55M40 70L50 70" stroke="white" stroke-width="2" stroke-linecap="round" />
+  <circle cx="35" cy="25" r="3" fill="white" />
+  <circle cx="30" cy="40" r="3" fill="white" />
+  <circle cx="25" cy="55" r="3" fill="white" />
+  <circle cx="40" cy="70" r="3" fill="white" />
+
+  <!-- Right Side -->
+  <path d="M65 25L55 25M70 40L60 40M75 55L65 55M60 70L50 70" stroke="white" stroke-width="2" stroke-linecap="round" />
+  <circle cx="65" cy="25" r="3" fill="white" />
+  <circle cx="70" cy="40" r="3" fill="white" />
+  <circle cx="75" cy="55" r="3" fill="white" />
+  <circle cx="60" cy="70" r="3" fill="white" />
+
+  <!-- Connecting Center Lines -->
+  <path d="M45 25H55M40 40H60M35 55H65" stroke="white" stroke-width="1.5" opacity="0.6" />
+</svg>

@@ -3,8 +3,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-v14+-green.svg)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.18-lightgrey.svg)](https://expressjs.com/)
+[![Figma](https://img.shields.io/badge/Figma-Design-F24E1E?logo=figma&logoColor=white)](https://www.figma.com/design/i0c6DhTI857DSouWlCwFV2/DriveEase?node-id=0-1&p=f&t=FnllJoQqbtLgTHh3-0)
 
 **DriveEase** is India's smart digital driving licence portal that simplifies the process of applying for, tracking, and managing transport services online. Built with modern web technologies, it provides a seamless user experience for learner's licence, driving licence applications, and appointment scheduling.
+
+## 🎨 Design
+
+View the complete high-fidelity design on Figma:
+👉 [DriveEase Figma Design](https://www.figma.com/design/i0c6DhTI857DSouWlCwFV2/DriveEase?node-id=0-1&p=f&t=FnllJoQqbtLgTHh3-0)
+
+The design includes:
+- Complete user interface mockups
+- Interactive prototypes
+- Design system and components
+- Responsive layouts for all screen sizes
+- Accessibility considerations
 
 ## ✨ Features
 

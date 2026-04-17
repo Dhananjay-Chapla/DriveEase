@@ -1,4 +1,4 @@
-# 🚗 DriveEase - National Transport Portal
+# 🚗 DriveEase - Redesign of Sarthi Parivahan
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-v14+-green.svg)](https://nodejs.org/)
